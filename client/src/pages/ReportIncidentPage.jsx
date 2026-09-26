@@ -6,6 +6,7 @@ import {
   Cpu, 
   CheckCircle2, 
   AlertTriangle, 
+  AlertCircle,
   FileText, 
   Lock, 
   Key, 
@@ -76,6 +77,7 @@ export function ReportIncidentPage() {
 
   // Submission State
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [submissionResult, setSubmissionResult] = useState(null);
 
   // Prepopulate if navigated from Quick Scanner
@@ -165,6 +167,7 @@ export function ReportIncidentPage() {
   // Final Submit Action (Handles Online and Offline)
   const handleSubmitFinal = async () => {
     setIsSubmitting(true);
+    setSubmitError('');
     try {
       const payload = {
         ...formData,
@@ -197,6 +200,7 @@ export function ReportIncidentPage() {
       }
     } catch (err) {
       console.error('Submission error:', err);
+      setSubmitError(err.message || 'Submission failed. Please verify your details.');
     } finally {
       setIsSubmitting(false);
     }
@@ -206,39 +210,39 @@ export function ReportIncidentPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       
       {/* Wizard Header */}
-      <div className="glass-panel-glow rounded-2xl p-6 border border-cyan-500/30">
+      <div className="glass-panel-glow rounded-2xl p-6 border border-slate-800">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-400 text-xs font-mono border border-cyan-800 mb-1">
-              <ShieldAlert className="w-3.5 h-3.5" />
-              SRD §9 Incident Reporting Wizard
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-slate-800 text-sky-300 text-xs font-medium border border-slate-700 mb-1">
+              <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
+              Grievance & Incident Registration
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-white">
-              Report Cyber Threat / Security Incident
+            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              Report Cyber Threat / Fraud Incident
             </h1>
           </div>
 
           {/* Stepper Progress */}
-          <div className="flex items-center gap-2 font-mono text-xs">
-            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 ${
-              step >= 1 ? 'bg-cyan-950 border-cyan-500 text-cyan-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-500'
+          <div className="flex items-center gap-2 text-xs">
+            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
+              step >= 1 ? 'bg-sky-950/80 border-sky-600 text-sky-300 font-semibold' : 'bg-slate-900 border-slate-800 text-slate-500'
             }`}>
               <span>1</span>
               <span className="hidden sm:inline">Incident Info</span>
             </div>
             <span className="text-slate-600">→</span>
-            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 ${
-              step >= 2 ? 'bg-cyan-950 border-cyan-500 text-cyan-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-500'
+            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
+              step >= 2 ? 'bg-sky-950/80 border-sky-600 text-sky-300 font-semibold' : 'bg-slate-900 border-slate-800 text-slate-500'
             }`}>
               <span>2</span>
-              <span className="hidden sm:inline">Evidence Vault</span>
+              <span className="hidden sm:inline">Evidence Files</span>
             </div>
             <span className="text-slate-600">→</span>
-            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 ${
-              step >= 3 ? 'bg-cyan-950 border-cyan-500 text-cyan-300 font-bold' : 'bg-slate-900 border-slate-800 text-slate-500'
+            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
+              step >= 3 ? 'bg-sky-950/80 border-sky-600 text-sky-300 font-semibold' : 'bg-slate-900 border-slate-800 text-slate-500'
             }`}>
               <span>3</span>
-              <span className="hidden sm:inline">AI Review</span>
+              <span className="hidden sm:inline">Review & Submit</span>
             </div>
           </div>
         </div>
@@ -537,11 +541,11 @@ export function ReportIncidentPage() {
         <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
           <div className="border-b border-slate-800 pb-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <UploadCloud className="w-5 h-5 text-cyan-400" />
-              Step 2: Digital Evidence Upload & Blockchain Anchor (SRD §22)
+              <UploadCloud className="w-5 h-5 text-sky-400" />
+              Step 2: Digital Evidence Upload & Cryptographic Hash
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Upload screenshots, audio recordings, email headers, call logs, or suspicious APK files. Each item is hashed with SHA-256 in real-time.
+            <p className="text-xs text-slate-300 mt-1">
+              Upload screenshots, audio recordings, email headers, call logs, or suspicious files. Each file is verified with SHA-256 for legal integrity.
             </p>
           </div>
 
@@ -662,6 +666,13 @@ export function ReportIncidentPage() {
               Review automated AI classification, priority calculation, and submit to CERT-Army triage queue.
             </p>
           </div>
+
+          {submitError && (
+            <div className="p-4 rounded-xl bg-red-950/80 border border-red-800 text-red-300 text-xs flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+              <span>{submitError}</span>
+            </div>
+          )}
 
           {/* AI Analysis Card (SRD Section 31) */}
           {aiPreview && (

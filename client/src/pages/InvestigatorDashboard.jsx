@@ -14,7 +14,9 @@ import {
   AlertTriangle,
   UserCheck,
   Hash,
-  ArrowUpRight
+  ArrowUpRight,
+  Shield,
+  Layers
 } from 'lucide-react';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -59,7 +61,7 @@ export function InvestigatorDashboard() {
       const res = await api.incidents.updateStatus(
         selectedCase._id,
         newStatus,
-        `Status transitioned to ${newStatus} by ${user?.fullName || 'Investigator'}`,
+        `Status transitioned to ${newStatus.replace(/_/g, ' ')} by ${user?.fullName || 'Investigating Officer'}`,
         user
       );
       if (res.success) {
@@ -102,25 +104,25 @@ export function InvestigatorDashboard() {
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="glass-panel-glow rounded-2xl p-6 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="glass-panel-glow rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-amber-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-1">
             <ShieldCheck className="w-4 h-4" />
-            CERT-Army Forensic Triage & Investigation Workspace (SRD §34 & §35)
+            Forensic Triage & Investigation Workspace
           </div>
-          <h1 className="text-2xl font-bold text-white">
-            Investigator Case Queue
+          <h1 className="text-2xl font-bold text-white tracking-tight">
+            CERT-Army Incident Command Queue
           </h1>
-          <p className="text-xs text-slate-300">
-            Assigned Officer: <span className="text-white font-semibold">{user?.fullName || 'Col. Rajeshwar Singh'}</span> • Clearance: <strong className="text-amber-400">RESTRICTED MIL-CERT</strong>
+          <p className="text-xs text-slate-300 mt-0.5">
+            Active Officer: <span className="text-white font-semibold">{user?.fullName || 'Col. Rajeshwar Singh'}</span> • Clearance: <strong className="text-amber-400 font-mono">RESTRICTED DEFENCE CLEARANCE</strong>
           </p>
         </div>
 
         <div className="flex items-center gap-3 font-mono text-xs">
-          <span className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">
-            Total Active Queue: <strong className="text-white">{cases.length}</strong>
+          <span className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300">
+            Total Queue: <strong className="text-white">{cases.length}</strong>
           </span>
-          <span className="p-2.5 rounded-xl bg-red-950/80 border border-red-800 text-red-300">
+          <span className="p-2.5 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300">
             P1 Critical: <strong className="text-red-400">{cases.filter(c => c.priority === 'P1').length}</strong>
           </span>
         </div>
@@ -135,13 +137,13 @@ export function InvestigatorDashboard() {
           {/* Search & Filters */}
           <div className="space-y-3">
             <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by ID, title, keyword..."
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-cyan-500"
+                placeholder="Search ID, title, keywords..."
+                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl pl-9 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500"
               />
             </div>
 
@@ -149,7 +151,7 @@ export function InvestigatorDashboard() {
               <select
                 value={filterSeverity}
                 onChange={(e) => setFilterSeverity(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none"
+                className="bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none"
               >
                 <option value="ALL">All Severities</option>
                 <option value="CRITICAL">Critical</option>
@@ -161,7 +163,7 @@ export function InvestigatorDashboard() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none"
+                className="bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="SUBMITTED">Submitted</option>
@@ -176,7 +178,7 @@ export function InvestigatorDashboard() {
           {/* Case Items List */}
           <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
             {filteredCases.length === 0 ? (
-              <p className="text-center py-8 text-xs text-slate-500 font-mono">No cases matching filter.</p>
+              <p className="text-center py-8 text-xs text-slate-500 font-mono">No cases matching active filter.</p>
             ) : (
               filteredCases.map(c => {
                 const isSelected = selectedCase?._id === c._id;
@@ -186,20 +188,20 @@ export function InvestigatorDashboard() {
                     onClick={() => setSelectedCase(c)}
                     className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-amber-950/30 border-amber-500/60 shadow-glow-amber'
-                        : 'bg-slate-900/70 border-slate-800 hover:border-slate-700'
+                        ? 'bg-slate-800/90 border-amber-500/50 shadow-sm'
+                        : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-xs font-bold text-cyan-400">{c.complaintId}</span>
+                      <span className="font-mono text-xs font-bold text-sky-400">{c.complaintId}</span>
                       <div className="flex items-center gap-1.5">
                         <SeverityBadge severity={c.severity} />
                         <PriorityBadge priority={c.priority} />
                       </div>
                     </div>
                     <p className="text-xs font-semibold text-white mt-1 truncate">{c.title}</p>
-                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mt-2">
-                      <span>{c.incidentType}</span>
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2">
+                      <span className="font-mono">{c.incidentType}</span>
                       <StatusBadge status={c.status} />
                     </div>
                   </div>
@@ -218,8 +220,8 @@ export function InvestigatorDashboard() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-slate-400">Dossier:</span>
-                    <h2 className="text-lg font-mono font-bold text-cyan-400">{selectedCase.complaintId}</h2>
+                    <span className="text-xs font-mono text-slate-400">Incident Dossier:</span>
+                    <h2 className="text-lg font-mono font-bold text-sky-400">{selectedCase.complaintId}</h2>
                   </div>
                   <h3 className="text-sm font-bold text-white mt-0.5">{selectedCase.title}</h3>
                 </div>
@@ -230,19 +232,19 @@ export function InvestigatorDashboard() {
                 </div>
               </div>
 
-              {/* Status Controller Actions (SRD Section 35) */}
+              {/* Status Controller Actions */}
               <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase text-amber-400 font-bold">
-                    Case Workflow Transition (SRD §35)
+                  <span className="text-xs font-mono uppercase text-amber-400 font-semibold">
+                    Workflow Status Controller
                   </span>
-                  {updatingStatus && <span className="text-[10px] text-slate-400 animate-pulse">Updating...</span>}
+                  {updatingStatus && <span className="text-[10px] text-slate-400 animate-pulse">Updating record...</span>}
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   {[
                     { status: 'UNDER_INVESTIGATION', label: 'Start Investigation', color: 'bg-orange-600 hover:bg-orange-500' },
-                    { status: 'ESCALATED', label: 'Escalate to Nodal HQ', color: 'bg-rose-600 hover:bg-rose-500' },
+                    { status: 'ESCALATED', label: 'Escalate to Nodal Bank / HQ', color: 'bg-rose-600 hover:bg-rose-500' },
                     { status: 'RESOLVED', label: 'Mark Neutralized & Resolved', color: 'bg-emerald-600 hover:bg-emerald-500' },
                     { status: 'CLOSED', label: 'Close File', color: 'bg-slate-700 hover:bg-slate-600' }
                   ].map(action => (
@@ -250,7 +252,7 @@ export function InvestigatorDashboard() {
                       key={action.status}
                       onClick={() => handleStatusChange(action.status)}
                       disabled={updatingStatus || selectedCase.status === action.status}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-mono text-white transition disabled:opacity-40 disabled:cursor-not-allowed ${action.color}`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-medium text-white transition disabled:opacity-40 disabled:cursor-not-allowed ${action.color}`}
                     >
                       {action.label}
                     </button>
@@ -259,89 +261,89 @@ export function InvestigatorDashboard() {
               </div>
 
               {/* Incident Characteristics */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-mono">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">Threat Type</span>
-                  <span className="text-white font-bold">{selectedCase.incidentType}</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-mono">Threat Category</span>
+                  <span className="text-white font-semibold">{selectedCase.incidentType}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">Channel</span>
-                  <span className="text-cyan-300 font-bold">{selectedCase.channel}</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-mono">Incident Channel</span>
+                  <span className="text-sky-300 font-semibold">{selectedCase.channel}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">Source / Suspect</span>
-                  <span className="text-amber-300 font-bold truncate block">{selectedCase.suspectedSource || 'Unknown'}</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-mono">Suspected Origin</span>
+                  <span className="text-amber-300 font-semibold truncate block">{selectedCase.suspectedSource || 'Unknown'}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">Location</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-mono">Station Location</span>
                   <span className="text-white">{selectedCase.location}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">Financial Loss</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-mono">Financial Loss Reported</span>
                   <span className={selectedCase.financialLoss ? 'text-red-400 font-bold' : 'text-emerald-400'}>
                     {selectedCase.financialLoss ? `${selectedCase.currency} ${selectedCase.lossAmount}` : 'Nil (Protected)'}
                   </span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">Assigned Officer</span>
-                  <span className="text-white font-bold">{selectedCase.assignedOfficerName}</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-mono">Assigned Officer</span>
+                  <span className="text-white font-semibold">{selectedCase.assignedOfficerName}</span>
                 </div>
               </div>
 
               {/* Narrative */}
               <div className="space-y-1.5">
-                <h4 className="text-xs font-mono uppercase text-slate-400 font-bold">Report Narrative</h4>
+                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold">Incident Narrative & Grievance Details</h4>
                 <p className="text-xs text-slate-300 p-3.5 rounded-xl bg-slate-900 border border-slate-800 leading-relaxed">
                   {selectedCase.description}
                 </p>
               </div>
 
-              {/* AI Prediction & Indicators (SRD Section 31) */}
+              {/* AI Prediction & Indicators */}
               {selectedCase.aiAnalysis && (
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-cyan-500/40 space-y-2">
+                <div className="p-4 rounded-xl bg-slate-900/90 border border-sky-900/50 space-y-2">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-cyan-400 font-bold flex items-center gap-1.5">
-                      <Cpu className="w-3.5 h-3.5" /> AI Threat Prediction
+                    <span className="text-sky-400 font-bold flex items-center gap-1.5">
+                      <Cpu className="w-3.5 h-3.5" /> Threat Heuristic Analysis
                     </span>
                     <span className="text-slate-400">
-                      Score: <strong className="text-red-400">{selectedCase.aiAnalysis.riskScore}/100</strong> • Confidence: {(selectedCase.aiAnalysis.confidence * 100).toFixed(0)}%
+                      Risk Score: <strong className="text-red-400">{selectedCase.aiAnalysis.riskScore !== null ? selectedCase.aiAnalysis.riskScore : 'N/A'}/100</strong> • Confidence: {selectedCase.aiAnalysis.confidence !== null ? (selectedCase.aiAnalysis.confidence * 100).toFixed(0) + '%' : 'N/A'}
                     </span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    <strong>Rec:</strong> {selectedCase.aiAnalysis.recommendation}
+                    <strong>Recommended Action:</strong> {selectedCase.aiAnalysis.recommendation}
                   </p>
                 </div>
               )}
 
               {/* Evidence Vault List */}
               <div className="space-y-2">
-                <h4 className="text-xs font-mono uppercase text-slate-400 font-bold flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-amber-400" /> Evidence Vault & Hashes ({selectedCase.evidences?.length || 0})
+                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-amber-400" /> Evidence Vault & Cryptographic Hashes ({selectedCase.evidences?.length || 0})
                 </h4>
                 {selectedCase.evidences?.map(ev => (
-                  <div key={ev._id} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono space-y-1">
+                  <div key={ev._id} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1">
                     <div className="flex justify-between text-white font-semibold">
                       <span>{ev.fileName}</span>
-                      <span className="text-cyan-400">{ev.fileType}</span>
+                      <span className="text-sky-400 font-mono text-[11px]">{ev.fileType}</span>
                     </div>
-                    <div className="text-[10px] text-slate-400 truncate">
-                      SHA-256: <span className="text-emerald-400">{ev.sha256Hash}</span>
+                    <div className="text-[10px] font-mono text-slate-400 truncate">
+                      SHA-256 Digest: <span className="text-emerald-400">{ev.sha256Hash}</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Investigation Diary / Officer Notes (SRD Section 34) */}
+              {/* Investigation Diary / Officer Notes */}
               <div className="space-y-3 pt-2">
-                <h4 className="text-xs font-mono uppercase text-slate-400 font-bold">
-                  Confidential Forensic Log / Notes (POST /api/v1/cases/:id/notes)
+                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold">
+                  Confidential Forensic Log & Investigation Notes
                 </h4>
 
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {selectedCase.officerNotes?.map(note => (
                     <div key={note.id} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1">
-                      <div className="flex justify-between text-[10px] font-mono text-cyan-400">
-                        <span>{note.author}</span>
+                      <div className="flex justify-between text-[10px] font-mono text-sky-400">
+                        <span className="font-semibold">{note.author}</span>
                         <span className="text-slate-500">{note.date}</span>
                       </div>
                       <p className="text-slate-200">{note.text}</p>
@@ -354,14 +356,14 @@ export function InvestigatorDashboard() {
                     type="text"
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
-                    placeholder="Log an investigation finding or action..."
-                    className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+                    placeholder="Log an investigation finding or officer note..."
+                    className="flex-1 bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium flex items-center gap-1.5 transition"
                   >
-                    <Send className="w-3.5 h-3.5" /> Log Note
+                    <Send className="w-3.5 h-3.5" /> Save Note
                   </button>
                 </form>
               </div>
@@ -369,7 +371,7 @@ export function InvestigatorDashboard() {
             </div>
           ) : (
             <div className="text-center py-16 text-slate-500 font-mono text-xs">
-              Select a case from the queue to inspect forensic details.
+              Select an incident from the queue to view forensic details and actions.
             </div>
           )}
         </div>

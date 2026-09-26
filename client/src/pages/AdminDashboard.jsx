@@ -49,15 +49,15 @@ export function AdminDashboard() {
     <div className="max-w-6xl mx-auto space-y-6">
       
       {/* Header Banner */}
-      <div className="glass-panel-glow rounded-2xl p-6 border border-purple-500/30">
+      <div className="glass-panel-glow rounded-2xl p-6 border border-slate-800">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-purple-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
               <Sliders className="w-4 h-4" />
-              Defence Cyber Agency (DCA) HQ Console (SRD §4.3 & §34)
+              Defence Cyber Agency (DCA) Command Console
             </div>
-            <h1 className="text-2xl font-bold text-white">
-              System Administration & ML Intelligence Hub
+            <h1 className="text-2xl font-bold text-white tracking-tight">
+              System Administration & Threat Intelligence Hub
             </h1>
             <p className="text-xs text-slate-300">
               Audit logging, ML model telemetry, threat blacklists, and role-based access control.
@@ -65,9 +65,9 @@ export function AdminDashboard() {
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex flex-wrap gap-1.5 p-1 bg-slate-900 border border-slate-800 rounded-xl font-mono text-xs">
+          <div className="flex flex-wrap gap-1.5 p-1 bg-slate-900 border border-slate-800 rounded-xl text-xs">
             {[
-              { id: 'ml-health', label: 'ML Model Health', icon: Cpu },
+              { id: 'ml-health', label: 'ML Model Telemetry', icon: Cpu },
               { id: 'audit-logs', label: 'Audit Log Ledger', icon: Terminal },
               { id: 'threat-intel', label: 'Threat Intel Feed', icon: Activity },
               { id: 'users', label: 'User & RBAC', icon: Users }
@@ -79,7 +79,7 @@ export function AdminDashboard() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-                    isActive ? 'bg-purple-600 text-white font-bold shadow-glow-purple' : 'text-slate-400 hover:text-white'
+                    isActive ? 'bg-purple-600 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -91,69 +91,69 @@ export function AdminDashboard() {
         </div>
       </div>
 
-      {/* TAB 1: ML Model Health & Telemetry (SRD Section 28, 31, 32, 45) */}
+      {/* TAB 1: ML Model Health & Telemetry */}
       {activeTab === 'ml-health' && (
         <div className="space-y-6 animate-fadeIn">
           
           {/* Top Metrics Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="p-4 rounded-2xl glass-card border border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 block">Overall Accuracy</span>
+              <span className="text-xs text-slate-400 font-mono">Accuracy</span>
               <p className="text-2xl font-mono font-bold text-cyan-400">{mlMetrics.overallAccuracy}%</p>
-              <span className="text-[10px] text-emerald-400 font-mono">TF-IDF + Forest (FastAPI)</span>
+              <span className="text-[10px] text-slate-500 font-mono">Overall F1: {mlMetrics.f1Score}%</span>
             </div>
 
             <div className="p-4 rounded-2xl glass-card border border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 block">Precision</span>
+              <span className="text-xs text-slate-400 font-mono">Precision</span>
               <p className="text-2xl font-mono font-bold text-emerald-400">{mlMetrics.precision}%</p>
-              <span className="text-[10px] text-slate-500 font-mono">Low False Positives</span>
+              <span className="text-[10px] text-slate-500 font-mono">True Positives</span>
             </div>
 
             <div className="p-4 rounded-2xl glass-card border border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 block">Recall (Safety-Crit)</span>
+              <span className="text-xs text-slate-400 font-mono">Recall (Sensitivity)</span>
               <p className="text-2xl font-mono font-bold text-amber-400">{mlMetrics.recall}%</p>
-              <span className="text-[10px] text-slate-500 font-mono">SRD §45 FN Minimization</span>
+              <span className="text-[10px] text-slate-500 font-mono">False Negative Minimization</span>
             </div>
 
             <div className="p-4 rounded-2xl glass-card border border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 block">F1-Score</span>
-              <p className="text-2xl font-mono font-bold text-purple-400">{mlMetrics.f1Score}%</p>
-              <span className="text-[10px] text-slate-500 font-mono">Harmonic Mean</span>
+              <span className="text-xs text-slate-400 font-mono">Inference Latency</span>
+              <p className="text-2xl font-mono font-bold text-purple-400">{mlMetrics.averageInferenceLatencyMs} ms</p>
+              <span className="text-[10px] text-slate-500 font-mono">P99 SLA &lt; 500ms</span>
             </div>
 
-            <div className="p-4 rounded-2xl glass-card border border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 block">Avg Inference</span>
-              <p className="text-2xl font-mono font-bold text-white">{mlMetrics.averageInferenceLatencyMs} ms</p>
-              <span className="text-[10px] text-cyan-400 font-mono">Real-time Triage</span>
+            <div className="p-4 rounded-2xl glass-card border border-slate-800 col-span-2 lg:col-span-1">
+              <span className="text-xs text-slate-400 font-mono">Total Threats Neutralized</span>
+              <p className="text-2xl font-mono font-bold text-rose-400">{mlMetrics.threatsNeutralized}</p>
+              <span className="text-[10px] text-slate-500 font-mono">From {mlMetrics.totalScansProcessed} Scans</span>
             </div>
           </div>
 
-          {/* Model Architecture & Integration Details (SRD Section 28) */}
+          {/* Model Architecture & Integration Details */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             {/* Architecture Pipeline Map */}
             <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
               <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-cyan-400" />
-                Decoupled ML Pipeline (SRD §28)
+                Decoupled ML Pipeline Architecture
               </h3>
 
               <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs space-y-2.5">
                 <div className="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800">
                   <span className="text-cyan-400">1. Client / React PWA</span>
-                  <span className="text-slate-500">POST /api/v1/incidents</span>
+                  <span className="text-slate-500">Incident Form & Evidence</span>
                 </div>
-                <div className="text-center text-slate-600">↓ HTTPS</div>
+                <div className="text-center text-slate-600">↓ HTTPS Gateway</div>
                 <div className="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800">
                   <span className="text-blue-400">2. Node.js Express Gateway</span>
                   <span className="text-slate-500">JSON Contract Validation</span>
                 </div>
-                <div className="text-center text-slate-600">↓ REST Contract (SRD §30)</div>
+                <div className="text-center text-slate-600">↓ REST Contract Service</div>
                 <div className="flex items-center justify-between p-2 rounded bg-cyan-950/60 border border-cyan-700">
                   <span className="text-cyan-300 font-bold">3. Python FastAPI ML Service</span>
                   <span className="text-emerald-400">v{mlMetrics.modelVersion}</span>
                 </div>
-                <div className="text-center text-slate-600">↓ Prediction + Probabilities (SRD §31)</div>
+                <div className="text-center text-slate-600">↓ Prediction + Probabilities</div>
                 <div className="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800">
                   <span className="text-amber-400">4. Priority Engine & MongoDB</span>
                   <span className="text-slate-500">P1-P4 + Blockchain Hash</span>
@@ -161,7 +161,7 @@ export function AdminDashboard() {
               </div>
             </div>
 
-            {/* Confusion Matrix (SRD Section 45) */}
+            {/* Confusion Matrix */}
             <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
               <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider flex items-center gap-2">
                 <Layers className="w-4 h-4 text-purple-400" />
@@ -202,14 +202,14 @@ export function AdminDashboard() {
         </div>
       )}
 
-      {/* TAB 2: Immutable Audit Logs (SRD Section 24) */}
+      {/* TAB 2: Immutable Audit Logs */}
       {activeTab === 'audit-logs' && (
         <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 animate-fadeIn">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-cyan-400" />
-                Immutable System Audit Logs (SRD §24)
+                <Terminal className="w-4 h-4 text-sky-400" />
+                Immutable System Audit Log Ledger
               </h3>
               <p className="text-xs text-slate-400">
                 Every sensitive action, login, evidence download, and case modification is cryptographically recorded.
@@ -242,7 +242,7 @@ export function AdminDashboard() {
                       {log.actorName}
                     </td>
                     <td className="py-3">
-                      <span className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-cyan-300 border border-slate-700">
+                      <span className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-sky-300 border border-slate-700">
                         {log.actorRole}
                       </span>
                     </td>
@@ -250,7 +250,7 @@ export function AdminDashboard() {
                       <span className="text-amber-400 font-bold">{log.action}</span>
                     </td>
                     <td className="py-3 text-slate-300">
-                      {log.resourceType} : <span className="text-cyan-400">{log.resourceId}</span>
+                      {log.resourceType} : <span className="text-sky-400">{log.resourceId}</span>
                     </td>
                     <td className="py-3 text-slate-500 text-[10px] truncate max-w-[150px]">
                       {log.ipAddress}
@@ -263,20 +263,20 @@ export function AdminDashboard() {
         </div>
       )}
 
-      {/* TAB 3: Threat Intelligence Indicators (SRD Section 26) */}
+      {/* TAB 3: Threat Intelligence Indicators */}
       {activeTab === 'threat-intel' && (
         <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 animate-fadeIn">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Activity className="w-4 h-4 text-red-400" />
-                Active Defence Threat Intelligence Registry (SRD §26)
+                <Activity className="w-4 h-4 text-rose-400" />
+                Active Defence Threat Intelligence Registry
               </h3>
               <p className="text-xs text-slate-400">
                 Shared Indicators of Compromise (IOCs) across Army, Navy, and Air Force command networks.
               </p>
             </div>
-            <button className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono">
+            <button className="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold">
               + Add Indicator
             </button>
           </div>
@@ -296,10 +296,10 @@ export function AdminDashboard() {
               <tbody className="divide-y divide-slate-800/60">
                 {threatIntel.map(ti => (
                   <tr key={ti._id} className="hover:bg-slate-900/60">
-                    <td className="py-3 font-bold text-cyan-400">{ti.indicatorType}</td>
+                    <td className="py-3 font-bold text-sky-400">{ti.indicatorType}</td>
                     <td className="py-3 text-white truncate max-w-xs">{ti.indicatorValue}</td>
                     <td className="py-3 text-amber-300">{ti.classification}</td>
-                    <td className="py-3 font-bold text-red-400">{ti.riskScore}/100</td>
+                    <td className="py-3 font-bold text-rose-400">{ti.riskScore}/100</td>
                     <td className="py-3 text-slate-400 text-[11px]">{ti.source}</td>
                     <td className="py-3">
                       <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px]">
@@ -314,13 +314,13 @@ export function AdminDashboard() {
         </div>
       )}
 
-      {/* TAB 4: User & Role-Based Access Control (SRD Section 4.1-4.3 & 40) */}
+      {/* TAB 4: User & Role-Based Access Control */}
       {activeTab === 'users' && (
         <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 animate-fadeIn">
           <div className="border-b border-slate-800 pb-3">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Users className="w-4 h-4 text-purple-400" />
-              Role-Based Access Control & User Management (SRD §40)
+              Role-Based Access Control & User Management
             </h3>
             <p className="text-xs text-slate-400">
               Manage Service IDs, roles (`USER`, `INVESTIGATOR`, `ADMIN`, `SUPER_ADMIN`), and operational clearance.
@@ -328,16 +328,16 @@ export function AdminDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono">
-              <span className="text-slate-400 block">Total Defence Users</span>
-              <span className="text-xl font-bold text-white">4,821 Registered</span>
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+              <span className="text-slate-400 block font-mono">Total Registered Users</span>
+              <span className="text-xl font-bold text-white">4,821 Personnel</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono">
-              <span className="text-slate-400 block">Active Investigators</span>
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+              <span className="text-slate-400 block font-mono">Active Investigators</span>
               <span className="text-xl font-bold text-amber-400">28 CERT Officers</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono">
-              <span className="text-slate-400 block">HQ Administrators</span>
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+              <span className="text-slate-400 block font-mono">HQ Administrators</span>
               <span className="text-xl font-bold text-purple-400">6 Security Leads</span>
             </div>
           </div>

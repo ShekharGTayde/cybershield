@@ -2,84 +2,229 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens ────────────────────────────── */
 :root {
+  --bg-base:    #0B0D14;
+  --bg-card:    #111420;
+  --bg-panel:   #13172A;
+  --border:     rgba(255,255,255,0.07);
+  --border-md:  rgba(255,255,255,0.11);
+  --accent:     #E05C1A;     /* warm saffron-orange — India flag inspired */
+  --accent-alt: #2563EB;     /* royal blue */
+  --text-base:  #F0F2F8;
+  --text-muted: #8891AA;
+  --radius:     14px;
   color-scheme: dark;
+}
+
+/* ─── Base ──────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background-color: #070B14;
-  color: #F8FAFC;
-  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-base);
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ─── Scrollbars ────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #080A10; }
+::-webkit-scrollbar-thumb { background: #1E2340; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #2D3360; }
+
+/* ─── India Map Background Watermark ────────────── */
+/* Applied via .india-bg on the layout wrapper */
+.india-bg {
+  position: relative;
 }
-::-webkit-scrollbar-track {
-  background: #0B1120;
-}
-::-webkit-scrollbar-thumb {
-  background: #1E293B;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+.india-bg::before {
+  content: '';
+  position: fixed;
+  right: -6%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(640px, 55vw);
+  height: min(760px, 65vh);
+  opacity: 0.045;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'%3E%3Cpath fill='white' d='M196 8 C196 8 210 12 218 18 C230 26 236 32 240 44 C244 56 242 66 248 76 C252 84 260 88 266 96 C274 106 276 118 280 130 C284 142 290 154 288 168 C286 180 278 188 276 202 C274 214 280 226 278 240 C276 252 268 260 264 272 C260 284 262 298 256 310 C250 322 240 330 232 342 C224 354 218 368 208 378 C198 388 186 394 174 400 C162 406 148 408 136 414 C124 420 114 430 102 432 C90 434 78 430 68 424 C58 418 50 408 42 400 C34 392 26 384 22 374 C18 362 22 350 20 338 C18 326 12 316 12 304 C12 292 18 282 20 270 C22 258 20 246 24 234 C28 222 36 214 44 204 C52 194 60 186 64 174 C68 162 66 148 72 136 C78 124 88 116 96 106 C104 96 110 84 120 76 C130 68 142 64 152 56 C162 48 170 38 182 32 C190 26 196 8 196 8Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' d='M196 8 C196 8 210 12 218 18 C230 26 236 32 240 44 C244 56 242 66 248 76 C252 84 260 88 266 96 C274 106 276 118 280 130 C284 142 290 154 288 168 C286 180 278 188 276 202 C274 214 280 226 278 240 C276 252 268 260 264 272 C260 284 262 298 256 310 C250 322 240 330 232 342 C224 354 218 368 208 378 C198 388 186 394 174 400 C162 406 148 408 136 414 C124 420 114 430 102 432 C90 434 78 430 68 424 C58 418 50 408 42 400 C34 392 26 384 22 374 C18 362 22 350 20 338 C18 326 12 316 12 304 C12 292 18 282 20 270 C22 258 20 246 24 234 C28 222 36 214 44 204 C52 194 60 186 64 174 C68 162 66 148 72 136 C78 124 88 116 96 106 C104 96 110 84 120 76 C130 68 142 64 152 56 C162 48 170 38 182 32 C190 26 196 8 196 8Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-/* Military Cyber Grid Background */
+/* ─── Editorial Background Dot Grid (Terrixa style) */
 .cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
 .radar-grid {
-  background-size: 20px 20px;
-  background-image: 
-    radial-gradient(circle, rgba(6, 182, 212, 0.15) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(224,92,26,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Glassmorphism Classes */
+/* ─── Panel Cards ───────────────────────────────── */
 .glass-panel {
-  background: rgba(19, 29, 49, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(17, 20, 32, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.35);
 }
 
 .glass-panel-glow {
-  background: rgba(19, 29, 49, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(6, 182, 212, 0.3);
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.2);
+  background: linear-gradient(145deg, rgba(18,22,38,0.95) 0%, rgba(15,18,30,0.88) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 20, 32, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.18s ease, background 0.18s ease;
 }
 
-/* Glowing text utilities */
-.text-glow-cyan {
-  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+.glass-card:hover {
+  border-color: rgba(255,255,255,0.13);
+  background: rgba(26, 30, 50, 0.7);
 }
 
-.text-glow-emerald {
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+/* ─── Editorial Accent Line (Terrixa style underlines) */
+.section-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
 }
 
-.text-glow-amber {
-  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+/* ─── Numbered Card Label (01, 02, 03 style from reference) */
+.card-number {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.text-glow-red {
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+/* ─── Accent orange / saffron pill ─────────────── */
+.pill-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: rgba(224,92,26,0.12);
+  border: 1px solid rgba(224,92,26,0.28);
+  border-radius: 999px;
+  color: #F0804A;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
+
+/* ─── Ticker Animation ──────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(100vw); }
+  to   { transform: translateX(-100%); }
+}
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+/* ─── Fade In ───────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn 0.22s ease forwards; }
+
+/* ─── Spin ──────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Typography Scale ──────────────────────────── */
+.heading-xl {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #F8FAFF;
+}
+.heading-lg {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: #F0F2F8;
+}
+.label-mono {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Glow text helpers ─────────────────────────── */
+.text-glow-cyan    { text-shadow: 0 0 12px rgba(56,189,248,0.22); }
+.text-glow-emerald { text-shadow: 0 0 12px rgba(52,211,153,0.22); }
+.text-glow-amber   { text-shadow: 0 0 12px rgba(251,191,36,0.22); }
+.text-glow-red     { text-shadow: 0 0 12px rgba(248,113,113,0.22); }
+.text-glow-orange  { text-shadow: 0 0 14px rgba(224,92,26,0.35); }
+
+/* ─── Accent line decorators ────────────────────── */
+.line-l-accent {
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+/* ─── Stat Number Style (Terrixa "+XX%") ────────── */
+.stat-number {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #FFFFFF;
+}
+
+/* ─── Card hover border accent ──────────────────── */
+.card-hover-accent {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover-accent:hover {
+  border-color: rgba(224,92,26,0.35);
+  box-shadow: 0 0 0 1px rgba(224,92,26,0.1);
+}
+
+/* ─── Focus ring ────────────────────────────────── */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(224,92,26,0.5);
+  outline-offset: 2px;
+}
+
+/* ─── No select on decorative elements ─────────── */
+.no-select { user-select: none; }

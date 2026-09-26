@@ -8,7 +8,7 @@ import { NotificationDrawer } from '../common/NotificationDrawer';
 
 export function Layout({ withSidebar = true }) {
   return (
-    <div className="min-h-screen flex flex-col bg-defence-dark cyber-grid text-defence-text">
+    <div className="min-h-screen flex flex-col bg-[#0B0D14] cyber-grid text-slate-100 india-bg relative">
       <Navbar />
       <OfflineBanner />
       <NotificationDrawer />

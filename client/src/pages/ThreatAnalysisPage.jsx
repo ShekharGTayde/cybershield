@@ -129,22 +129,22 @@ export function ThreatAnalysisPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       
       {/* Header */}
-      <div className="glass-panel-glow rounded-2xl p-6 sm:p-8 border border-cyan-500/30">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 text-xs font-mono border border-cyan-800 w-fit mb-2">
-          <Cpu className="w-4 h-4" />
-          SRD §13-15 AI Threat Heuristics & ML Detection
+      <div className="glass-panel-glow rounded-2xl p-6 sm:p-8 border border-slate-800">
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-sky-300 text-xs font-medium border border-slate-700 w-fit mb-2">
+          <Cpu className="w-4 h-4 text-sky-400" />
+          Heuristic Threat Detection Engine
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-          AI Cyber Threat Analysis Suite
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          Cyber Threat Analysis Suite
         </h1>
         <p className="text-xs sm:text-sm text-slate-300 mt-1">
-          Real-time threat evaluation for URLs, emails, phone numbers, and files using the FastAPI defence classifier model.
+          Real-time threat evaluation for URLs, emails, phone numbers, and file hashes to safeguard military operational security.
         </p>
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 pt-6 border-t border-slate-800/80 mt-6">
           {[
-            { id: 'url', label: 'URL / Link Checker', icon: Globe },
+            { id: 'url', label: 'URL / Link Scanner', icon: Globe },
             { id: 'email', label: 'Email Threat Analyzer', icon: Mail },
             { id: 'phone', label: 'Phone & Spam Checker', icon: Phone },
             { id: 'sandbox', label: 'File Hash Sandbox', icon: Hash }
@@ -155,9 +155,9 @@ export function ThreatAnalysisPage() {
               <button
                 key={t.id}
                 onClick={() => handleTabSwitch(t.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-cyan-600 text-white font-bold shadow-glow-cyan'
+                    ? 'bg-sky-600 text-white font-semibold shadow-sm'
                     : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800'
                 }`}
               >
@@ -169,15 +169,15 @@ export function ThreatAnalysisPage() {
         </div>
       </div>
 
-      {/* TAB 1: URL Checker (SRD §13.1) */}
+      {/* TAB 1: URL Checker */}
       {activeTab === 'url' && (
         <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
           <div className="border-b border-slate-800 pb-3">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Globe className="w-5 h-5 text-cyan-400" />
-              13.1 Suspicious URL / Phishing Checker
+              <Globe className="w-5 h-5 text-sky-400" />
+              Suspicious URL & Phishing Link Scanner
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-300 mt-0.5">
               Inspects domain age, entropy, typosquatting of defence portals (.xyz/.top), and HTTPS certificate validity.
             </p>
           </div>
@@ -255,15 +255,15 @@ export function ThreatAnalysisPage() {
         </div>
       )}
 
-      {/* TAB 2: Email Checker (SRD §14) */}
+           {/* TAB 2: Email Checker */}
       {activeTab === 'email' && (
         <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
           <div className="border-b border-slate-800 pb-3">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Mail className="w-5 h-5 text-purple-400" />
-              14. Email & Inbound Threat Analyzer (NLP)
+              Email & Inbound Threat Analyzer
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-300 mt-0.5">
               Evaluates email headers, sender-domain alignment, urgency language, and credential requests.
             </p>
           </div>
@@ -271,104 +271,105 @@ export function ThreatAnalysisPage() {
           <form onSubmit={handleEmailScan} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Sender Email (senderEmail) *
+                <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-1.5">
+                  Sender Email Address *
                 </label>
                 <input
                   type="email"
                   required
                   value={emailForm.senderEmail}
                   onChange={(e) => setEmailForm(prev => ({ ...prev, senderEmail: e.target.value }))}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-500"
+                  placeholder="e.g. notice-verify@indian-army-advisory.org"
+                  className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Subject Line *
+                <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-1.5">
+                  Email Subject Line *
                 </label>
                 <input
                   type="text"
                   required
                   value={emailForm.subject}
                   onChange={(e) => setEmailForm(prev => ({ ...prev, subject: e.target.value }))}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Email Body Content *
-                </label>
-                <textarea
-                  rows={4}
-                  required
-                  value={emailForm.body}
-                  onChange={(e) => setEmailForm(prev => ({ ...prev, body: e.target.value }))}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-cyan-500"
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Raw Headers (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={emailForm.headers}
-                  onChange={(e) => setEmailForm(prev => ({ ...prev, headers: e.target.value }))}
-                  placeholder="Received: from mail.example.com"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-xs text-slate-300 font-mono focus:outline-none focus:border-cyan-500"
+                  placeholder="e.g. URGENT: Verify SPARSH Digital Life Certificate within 24h"
+                  className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div>
+              <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-1.5">
+                Email Body Text Content *
+              </label>
+              <textarea
+                rows={4}
+                required
+                value={emailForm.body}
+                onChange={(e) => setEmailForm(prev => ({ ...prev, body: e.target.value }))}
+                placeholder="Paste the full body text of the suspicious email..."
+                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500"
+              />
+            </div>
+
+            <div className="flex justify-end">
               <button
                 type="submit"
                 disabled={isEmailScanning}
-                className="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow-glow-purple flex items-center gap-2 transition disabled:opacity-50"
+                className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow-sm flex items-center gap-2 transition disabled:opacity-50"
               >
-                {isEmailScanning ? 'Running NLP Classifier...' : 'Analyze Email Threat'}
+                {isEmailScanning ? 'Evaluating NLP...' : 'Analyze Email Threats'}
               </button>
             </div>
           </form>
 
+          {/* Email Result */}
           {emailResult && (
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-purple-500/40 space-y-4 animate-fadeIn">
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
-                <span className="px-3 py-1 rounded-md text-xs font-mono font-bold bg-red-500/20 text-red-400 border border-red-500/40">
-                  {emailResult.prediction.label} (Score: {emailResult.prediction.riskScore}/100)
-                </span>
-                <span className="text-xs font-mono text-emerald-400">
-                  Confidence: {(emailResult.prediction.confidence * 100).toFixed(1)}%
-                </span>
-              </div>
-              <p className="text-xs text-slate-300">
-                <strong>Recommendation:</strong> {emailResult.recommendation}
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {emailResult.indicators.map((ind, i) => (
-                  <span key={i} className="px-2 py-0.5 rounded bg-slate-950 text-xs font-mono text-purple-300 border border-purple-900/50">
-                    • {ind}
+            <div className="p-5 rounded-xl bg-slate-900 border border-purple-900/50 space-y-4 animate-fadeIn">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2">
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    emailResult.prediction.riskScore >= 80 ? 'bg-red-950 text-red-300 border border-red-800' : 'bg-amber-950 text-amber-300 border border-amber-800'
+                  }`}>
+                    {emailResult.prediction.label}
                   </span>
-                ))}
+                  <span className="text-xs text-slate-300">
+                    Risk Score: <strong className="text-white">{emailResult.prediction.riskScore}/100</strong>
+                  </span>
+                </div>
+                <span className="text-[11px] font-mono text-slate-400">Confidence: {(emailResult.prediction.confidence * 100).toFixed(0)}%</span>
               </div>
+
+              <p className="text-xs text-slate-300"><strong>Recommendation:</strong> {emailResult.recommendation}</p>
+
+              {emailResult.indicators?.length > 0 && (
+                <div className="space-y-1">
+                  <span className="text-xs text-slate-400">Threat Indicators:</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {emailResult.indicators.map((ind, i) => (
+                      <span key={i} className="px-2 py-0.5 rounded bg-slate-800 text-[11px] text-purple-300 border border-slate-700">
+                        • {ind}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
       )}
 
-      {/* TAB 3: Phone / Spam Checker (SRD §15) */}
+      {/* TAB 3: Phone / Spam Checker */}
       {activeTab === 'phone' && (
         <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
           <div className="border-b border-slate-800 pb-3">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Phone className="w-5 h-5 text-amber-400" />
-              15. Phone Number & Spam Call Checker
+              Phone Number & Spam Registry Checker
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Cross-references suspect mobile number against national defence fraud registries and robocall telemetry.
+            <p className="text-xs text-slate-300 mt-0.5">
+              Cross-references suspect mobile numbers against national defence fraud registries and scam telemetry.
             </p>
           </div>
 

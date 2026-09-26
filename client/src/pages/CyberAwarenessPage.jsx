@@ -85,16 +85,16 @@ export function CyberAwarenessPage() {
     <div className="max-w-5xl mx-auto space-y-8">
       
       {/* Header */}
-      <div className="glass-panel-glow rounded-2xl p-6 sm:p-8 border border-cyan-500/30">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 text-xs font-mono border border-cyan-800 w-fit mb-2">
-          <BookOpen className="w-4 h-4" />
-          SRD §16 Prevention & Awareness Module
+      <div className="glass-panel-glow rounded-2xl p-6 sm:p-8 border border-slate-800">
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-sky-300 text-xs font-medium border border-slate-700 w-fit mb-2">
+          <BookOpen className="w-4 h-4 text-sky-400" />
+          Security Awareness & Defence Protocols
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-          Defence Cyber Shield & OPSEC Awareness Hub
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          Cyber Defence & OPSEC Awareness Hub
         </h1>
         <p className="text-xs sm:text-sm text-slate-300 mt-1">
-          Standard Operating Procedures (SOPs), counter-espionage advisories, and cyber defense protocols for Armed Forces personnel and families.
+          Standard Operating Procedures (SOPs), anti-phishing guidelines, and cyber defense protocols for armed forces personnel and families.
         </p>
       </div>
 
@@ -108,11 +108,11 @@ export function CyberAwarenessPage() {
               onClick={() => setSelectedModule(mod)}
               className={`p-5 rounded-2xl text-left border transition-all ${
                 isSelected
-                  ? 'bg-cyan-950/80 border-cyan-500 text-white shadow-glow-cyan'
+                  ? 'bg-slate-800/95 border-sky-500 text-white shadow-sm'
                   : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700'
               }`}
             >
-              <span className="text-[10px] font-mono text-cyan-400 uppercase">{mod.category}</span>
+              <span className="text-[10px] font-mono text-sky-400 uppercase">{mod.category}</span>
               <h3 className="text-sm font-bold text-white mt-1 line-clamp-2">{mod.title}</h3>
               <span className="text-[11px] font-mono text-slate-500 mt-2 block">{mod.readTime}</span>
             </button>
