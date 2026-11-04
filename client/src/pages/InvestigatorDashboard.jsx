@@ -104,27 +104,31 @@ export function InvestigatorDashboard() {
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="glass-panel-glow rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider mb-1">
-            <ShieldCheck className="w-4 h-4" />
+      <div className="glass-panel-glow rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-red-500/20 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-red-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 text-red-400 text-[10px] font-mono font-bold uppercase tracking-widest mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
             Forensic Triage & Investigation Workspace
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-display font-black text-white tracking-wide uppercase">
             CERT-Army Incident Command Queue
           </h1>
-          <p className="text-xs text-slate-300 mt-0.5">
-            Active Officer: <span className="text-white font-semibold">{user?.fullName || 'Col. Rajeshwar Singh'}</span> • Clearance: <strong className="text-amber-400 font-mono">RESTRICTED DEFENCE CLEARANCE</strong>
+          <p className="text-xs text-slate-400 mt-1">
+            Active Officer: <span className="text-white font-semibold">{user?.fullName || 'Col. Rajeshwar Singh'}</span> • Clearance: <strong className="text-red-400 font-mono">RESTRICTED DEFENCE CLEARANCE LEVEL-3</strong>
           </p>
         </div>
 
-        <div className="flex items-center gap-3 font-mono text-xs">
-          <span className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300">
-            Total Queue: <strong className="text-white">{cases.length}</strong>
-          </span>
-          <span className="p-2.5 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300">
-            P1 Critical: <strong className="text-red-400">{cases.filter(c => c.priority === 'P1').length}</strong>
-          </span>
+        <div className="flex items-center gap-3 font-mono text-xs relative z-10">
+          <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-slate-300">
+            <span className="text-[10px] text-slate-500 block uppercase">Total Queue</span>
+            <strong className="text-white font-display text-base">{cases.length}</strong>
+          </div>
+          <div className="p-3 rounded-2xl bg-red-950/60 border border-red-500/40 text-red-300">
+            <span className="text-[10px] text-red-400/80 block uppercase">P1 Critical</span>
+            <strong className="text-red-400 font-display text-base text-glow-red">{cases.filter(c => c.priority === 'P1').length}</strong>
+          </div>
         </div>
       </div>
 
@@ -132,18 +136,18 @@ export function InvestigatorDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left: Filterable Case Queue Table (5 Cols) */}
-        <div className="lg:col-span-5 glass-panel rounded-2xl p-4 sm:p-5 border border-slate-800 space-y-4">
+        <div className="lg:col-span-5 glass-panel rounded-3xl p-5 border border-slate-800 space-y-4">
           
           {/* Search & Filters */}
           <div className="space-y-3">
             <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
+              <Search className="w-4 h-4 text-red-400 absolute left-3.5 top-3" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search ID, title, keywords..."
-                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl pl-9 pr-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-sky-500"
+                className="w-full bg-slate-950/90 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-red-400 transition placeholder:text-slate-600"
               />
             </div>
 
@@ -151,7 +155,7 @@ export function InvestigatorDashboard() {
               <select
                 value={filterSeverity}
                 onChange={(e) => setFilterSeverity(e.target.value)}
-                className="bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none"
+                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-red-400"
               >
                 <option value="ALL">All Severities</option>
                 <option value="CRITICAL">Critical</option>
@@ -163,7 +167,7 @@ export function InvestigatorDashboard() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none"
+                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-red-400"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="SUBMITTED">Submitted</option>
@@ -176,9 +180,9 @@ export function InvestigatorDashboard() {
           </div>
 
           {/* Case Items List */}
-          <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+          <div className="space-y-2.5 max-h-[640px] overflow-y-auto pr-1">
             {filteredCases.length === 0 ? (
-              <p className="text-center py-8 text-xs text-slate-500 font-mono">No cases matching active filter.</p>
+              <p className="text-center py-10 text-xs text-slate-500 font-mono">No cases matching active filter.</p>
             ) : (
               filteredCases.map(c => {
                 const isSelected = selectedCase?._id === c._id;
@@ -186,22 +190,22 @@ export function InvestigatorDashboard() {
                   <div
                     key={c._id}
                     onClick={() => setSelectedCase(c)}
-                    className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-slate-800/90 border-amber-500/50 shadow-sm'
-                        : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                        ? 'bg-slate-900/90 border-red-400 shadow-glow-neon'
+                        : 'bg-slate-950/70 border-slate-800/80 hover:border-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-xs font-bold text-sky-400">{c.complaintId}</span>
+                      <span className="font-mono text-xs font-bold text-red-400">{c.complaintId}</span>
                       <div className="flex items-center gap-1.5">
                         <SeverityBadge severity={c.severity} />
                         <PriorityBadge priority={c.priority} />
                       </div>
                     </div>
-                    <p className="text-xs font-semibold text-white mt-1 truncate">{c.title}</p>
-                    <div className="flex items-center justify-between text-[10px] text-slate-400 mt-2">
-                      <span className="font-mono">{c.incidentType}</span>
+                    <p className="text-xs font-semibold text-white mt-1.5 truncate">{c.title}</p>
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2.5">
+                      <span className="font-mono text-[10px] text-slate-500">{c.incidentType}</span>
                       <StatusBadge status={c.status} />
                     </div>
                   </div>
@@ -212,18 +216,18 @@ export function InvestigatorDashboard() {
         </div>
 
         {/* Right: Full Case Investigation Dossier (7 Cols) */}
-        <div className="lg:col-span-7 glass-panel rounded-2xl p-6 border border-slate-800 space-y-6">
+        <div className="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-6">
           {selectedCase ? (
             <div className="space-y-6 animate-fadeIn">
               
               {/* Dossier Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-slate-400">Incident Dossier:</span>
-                    <h2 className="text-lg font-mono font-bold text-sky-400">{selectedCase.complaintId}</h2>
+                    <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">Incident Dossier:</span>
+                    <h2 className="text-lg font-mono font-bold text-red-400">{selectedCase.complaintId}</h2>
                   </div>
-                  <h3 className="text-sm font-bold text-white mt-0.5">{selectedCase.title}</h3>
+                  <h3 className="text-sm sm:text-base font-bold text-white mt-1">{selectedCase.title}</h3>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -233,26 +237,26 @@ export function InvestigatorDashboard() {
               </div>
 
               {/* Status Controller Actions */}
-              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+              <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase text-amber-400 font-semibold">
-                    Workflow Status Controller
+                  <span className="text-[11px] font-mono uppercase text-red-400 font-bold tracking-wider">
+                    // Workflow Status Transition Controller
                   </span>
-                  {updatingStatus && <span className="text-[10px] text-slate-400 animate-pulse">Updating record...</span>}
+                  {updatingStatus && <span className="text-[10px] text-slate-400 animate-pulse font-mono">Transitioning state...</span>}
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { status: 'UNDER_INVESTIGATION', label: 'Start Investigation', color: 'bg-orange-600 hover:bg-orange-500' },
-                    { status: 'ESCALATED', label: 'Escalate to Nodal Bank / HQ', color: 'bg-rose-600 hover:bg-rose-500' },
-                    { status: 'RESOLVED', label: 'Mark Neutralized & Resolved', color: 'bg-emerald-600 hover:bg-emerald-500' },
-                    { status: 'CLOSED', label: 'Close File', color: 'bg-slate-700 hover:bg-slate-600' }
+                    { status: 'UNDER_INVESTIGATION', label: 'Start Investigation', color: 'bg-amber-600 hover:bg-amber-500 text-white' },
+                    { status: 'ESCALATED', label: 'Escalate to Nodal Bank / HQ', color: 'bg-rose-600 hover:bg-rose-500 text-white' },
+                    { status: 'RESOLVED', label: 'Mark Neutralized & Resolved', color: 'bg-red-500 hover:bg-red-400 text-slate-950 font-bold shadow-glow-neon' },
+                    { status: 'CLOSED', label: 'Close File', color: 'bg-slate-800 hover:bg-slate-700 text-slate-300' }
                   ].map(action => (
                     <button
                       key={action.status}
                       onClick={() => handleStatusChange(action.status)}
                       disabled={updatingStatus || selectedCase.status === action.status}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium text-white transition disabled:opacity-40 disabled:cursor-not-allowed ${action.color}`}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-mono tracking-wider transition disabled:opacity-30 disabled:cursor-not-allowed ${action.color}`}
                     >
                       {action.label}
                     </button>
@@ -262,54 +266,54 @@ export function InvestigatorDashboard() {
 
               {/* Incident Characteristics */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
                   <span className="text-slate-500 block text-[10px] uppercase font-mono">Threat Category</span>
-                  <span className="text-white font-semibold">{selectedCase.incidentType}</span>
+                  <span className="text-white font-medium mt-0.5 block">{selectedCase.incidentType}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
                   <span className="text-slate-500 block text-[10px] uppercase font-mono">Incident Channel</span>
-                  <span className="text-sky-300 font-semibold">{selectedCase.channel}</span>
+                  <span className="text-red-400 font-medium font-mono mt-0.5 block">{selectedCase.channel}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
                   <span className="text-slate-500 block text-[10px] uppercase font-mono">Suspected Origin</span>
-                  <span className="text-amber-300 font-semibold truncate block">{selectedCase.suspectedSource || 'Unknown'}</span>
+                  <span className="text-amber-300 font-medium truncate mt-0.5 block">{selectedCase.suspectedSource || 'Unknown'}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
                   <span className="text-slate-500 block text-[10px] uppercase font-mono">Station Location</span>
-                  <span className="text-white">{selectedCase.location}</span>
+                  <span className="text-white mt-0.5 block">{selectedCase.location}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
                   <span className="text-slate-500 block text-[10px] uppercase font-mono">Financial Loss Reported</span>
-                  <span className={selectedCase.financialLoss ? 'text-red-400 font-bold' : 'text-emerald-400'}>
+                  <span className={`mt-0.5 block font-bold ${selectedCase.financialLoss ? 'text-red-400' : 'text-red-400'}`}>
                     {selectedCase.financialLoss ? `${selectedCase.currency} ${selectedCase.lossAmount}` : 'Nil (Protected)'}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
                   <span className="text-slate-500 block text-[10px] uppercase font-mono">Assigned Officer</span>
-                  <span className="text-white font-semibold">{selectedCase.assignedOfficerName}</span>
+                  <span className="text-white font-medium mt-0.5 block">{selectedCase.assignedOfficerName}</span>
                 </div>
               </div>
 
               {/* Narrative */}
               <div className="space-y-1.5">
-                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold">Incident Narrative & Grievance Details</h4>
-                <p className="text-xs text-slate-300 p-3.5 rounded-xl bg-slate-900 border border-slate-800 leading-relaxed">
+                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold tracking-wider">Incident Narrative & Grievance Details</h4>
+                <p className="text-xs text-slate-300 p-4 rounded-2xl bg-slate-950/70 border border-slate-800 leading-relaxed">
                   {selectedCase.description}
                 </p>
               </div>
 
               {/* AI Prediction & Indicators */}
               {selectedCase.aiAnalysis && (
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-sky-900/50 space-y-2">
+                <div className="p-4 rounded-2xl bg-slate-950/90 border border-red-500/30 space-y-2">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-sky-400 font-bold flex items-center gap-1.5">
+                    <span className="text-red-400 font-bold flex items-center gap-1.5">
                       <Cpu className="w-3.5 h-3.5" /> Threat Heuristic Analysis
                     </span>
                     <span className="text-slate-400">
                       Risk Score: <strong className="text-red-400">{selectedCase.aiAnalysis.riskScore !== null ? selectedCase.aiAnalysis.riskScore : 'N/A'}/100</strong> • Confidence: {selectedCase.aiAnalysis.confidence !== null ? (selectedCase.aiAnalysis.confidence * 100).toFixed(0) + '%' : 'N/A'}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300">
+                  <p className="text-xs text-slate-300 leading-relaxed">
                     <strong>Recommended Action:</strong> {selectedCase.aiAnalysis.recommendation}
                   </p>
                 </div>
@@ -318,16 +322,16 @@ export function InvestigatorDashboard() {
               {/* Evidence Vault List */}
               <div className="space-y-2">
                 <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-amber-400" /> Evidence Vault & Cryptographic Hashes ({selectedCase.evidences?.length || 0})
+                  <Award className="w-4 h-4 text-red-400" /> Evidence Vault & Cryptographic Hashes ({selectedCase.evidences?.length || 0})
                 </h4>
                 {selectedCase.evidences?.map(ev => (
-                  <div key={ev._id} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1">
+                  <div key={ev._id} className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs space-y-1">
                     <div className="flex justify-between text-white font-semibold">
                       <span>{ev.fileName}</span>
-                      <span className="text-sky-400 font-mono text-[11px]">{ev.fileType}</span>
+                      <span className="text-red-400 font-mono text-[11px]">{ev.fileType}</span>
                     </div>
                     <div className="text-[10px] font-mono text-slate-400 truncate">
-                      SHA-256 Digest: <span className="text-emerald-400">{ev.sha256Hash}</span>
+                      SHA-256 Digest: <span className="text-red-400">{ev.sha256Hash}</span>
                     </div>
                   </div>
                 ))}
@@ -335,14 +339,14 @@ export function InvestigatorDashboard() {
 
               {/* Investigation Diary / Officer Notes */}
               <div className="space-y-3 pt-2">
-                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold">
+                <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold tracking-wider">
                   Confidential Forensic Log & Investigation Notes
                 </h4>
 
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {selectedCase.officerNotes?.map(note => (
-                    <div key={note.id} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1">
-                      <div className="flex justify-between text-[10px] font-mono text-sky-400">
+                    <div key={note.id} className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs space-y-1">
+                      <div className="flex justify-between text-[10px] font-mono text-red-400">
                         <span className="font-semibold">{note.author}</span>
                         <span className="text-slate-500">{note.date}</span>
                       </div>
@@ -357,11 +361,11 @@ export function InvestigatorDashboard() {
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
                     placeholder="Log an investigation finding or officer note..."
-                    className="flex-1 bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="flex-1 bg-slate-950 border border-slate-800 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-400 transition placeholder:text-slate-600"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium flex items-center gap-1.5 transition"
+                    className="px-5 py-2.5 rounded-2xl bg-red-500 hover:bg-red-400 text-slate-950 font-display font-bold text-xs uppercase tracking-wider shadow-glow-neon flex items-center gap-1.5 transition"
                   >
                     <Send className="w-3.5 h-3.5" /> Save Note
                   </button>

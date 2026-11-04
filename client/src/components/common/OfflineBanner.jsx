@@ -10,22 +10,22 @@ export function OfflineBanner() {
   return (
     <div className={`px-4 py-2.5 text-xs font-mono flex flex-wrap items-center justify-between border-b transition-colors ${
       !isOnline 
-        ? 'bg-amber-950/90 text-amber-200 border-amber-800/80' 
-        : 'bg-cyan-950/90 text-cyan-200 border-cyan-800/80'
+        ? 'bg-amber-950/95 text-amber-200 border-amber-500/40' 
+        : 'bg-red-950/95 text-red-200 border-red-500/40 shadow-glow-neon'
     }`}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2.5">
         {!isOnline ? (
           <>
-            <WifiOff className="w-4 h-4 text-amber-400 animate-pulse" />
+            <WifiOff className="w-4 h-4 text-amber-400 animate-pulse shrink-0" />
             <span>
-              <strong>OFFLINE MODE ACTIVE:</strong> You are currently disconnected. Incident reports will be safely encrypted & queued locally in IndexedDB.
+              <strong className="text-white uppercase font-bold tracking-wider">OFFLINE MODE ACTIVE:</strong> Network disconnected. Incident reports will be locally encrypted (AES-256) & stored in IndexedDB.
             </span>
           </>
         ) : (
           <>
-            <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+            <CheckCircle2 className="w-4 h-4 text-red-400 shrink-0" />
             <span>
-              <strong>CONNECTIVITY RESTORED:</strong> {pendingCount} offline reports ready for synchronized dispatch to CERT-Army backend.
+              <strong className="text-white uppercase font-bold tracking-wider">CONNECTIVITY RESTORED:</strong> {pendingCount} offline reports ready for cryptographic dispatch to CERT-Army backend.
             </span>
           </>
         )}
@@ -33,7 +33,7 @@ export function OfflineBanner() {
 
       <div className="flex items-center gap-3 mt-1 sm:mt-0">
         {pendingCount > 0 && (
-          <span className="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30">
+          <span className="bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/40 text-[10px] font-bold">
             {pendingCount} Pending Queue
           </span>
         )}
@@ -41,7 +41,7 @@ export function OfflineBanner() {
         <button
           onClick={triggerSync}
           disabled={!isOnline || isSyncing}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-medium border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-medium border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition text-xs"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
           {isSyncing ? 'Synchronizing...' : 'Sync Now'}
@@ -50,7 +50,7 @@ export function OfflineBanner() {
         {/* Demo Simulator Toggle */}
         <button
           onClick={toggleSimulatedOffline}
-          className="text-xs text-slate-400 underline hover:text-white"
+          className="text-xs text-slate-400 underline hover:text-white transition"
           title="Toggle online/offline mode for testing"
         >
           [{!isOnline ? 'Go Online' : 'Simulate Offline'}]

@@ -78,37 +78,38 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-8 px-4 sm:px-6">
+    <div className="min-h-[85vh] flex items-center justify-center py-8 px-4 sm:px-6 relative">
       <div className="w-full max-w-2xl space-y-6">
 
         {/* Card */}
-        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative">
+        <div className="glass-panel-glow rounded-3xl p-6 sm:p-9 border border-red-500/25 shadow-2xl relative overflow-hidden backdrop-blur-2xl">
+          <div className="pointer-events-none absolute -top-20 -right-20 w-56 h-56 rounded-full bg-[#F20D25]/15 blur-3xl" />
 
-          <div className="text-center space-y-2 mb-6">
-            <div className="inline-flex p-3 rounded-2xl bg-slate-800/90 border border-slate-700 text-sky-400 mb-1 shadow-sm">
-              <ShieldCheck className="w-7 h-7" />
+          <div className="text-center space-y-2 mb-7 relative z-10">
+            <div className="inline-flex p-3 rounded-2xl bg-[#F20D25]/10 border border-[#F20D25]/40 text-[#F20D25] mb-2 shadow-[0_0_20px_rgba(255,38,56,0.25)]">
+              <ShieldCheck className="w-8 h-8 stroke-[2.2]" />
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">
-              Create CyberShield Account
+            <h1 className="font-display text-2xl font-black text-white tracking-wide uppercase">
+              CREATE CYBERSHIELD ACCOUNT
             </h1>
-            <p className="text-xs text-slate-400">
-              Official Portal for Defence Personnel, Dependents & Veterans
+            <p className="text-xs text-[#869F90] font-mono">
+              Official Portal for Defence Personnel, Dependents & Armed Forces Veterans
             </p>
           </div>
 
           {error && (
-            <div className="mb-6 p-3 rounded-xl bg-red-950/80 border border-red-800 text-red-300 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="mb-6 p-3.5 rounded-2xl bg-red-950/80 border border-red-500/50 text-red-300 text-xs flex items-center gap-2.5 font-mono">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleRegister} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-5 relative z-10">
 
             {/* User Type Selector */}
             <div>
-              <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2 font-semibold">
-                Account Registration Category *
+              <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-2 font-bold">
+                ACCOUNT REGISTRATION CATEGORY *
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
@@ -121,9 +122,9 @@ export function RegisterPage() {
                     key={t.id}
                     type="button"
                     onClick={() => setFormData(p => ({ ...p, userType: t.id }))}
-                    className={`px-3 py-2 rounded-xl text-xs font-medium border transition text-center truncate ${formData.userType === t.id
-                        ? 'bg-sky-600 border-sky-500 text-white font-semibold shadow-sm'
-                        : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700'
+                    className={`px-3 py-2.5 rounded-xl text-xs font-cyber font-bold border transition text-center truncate cursor-pointer ${formData.userType === t.id
+                        ? 'bg-[#F20D25] border-[#F20D25] text-black shadow-[0_0_12px_rgba(255,38,56,0.35)]'
+                        : 'bg-black/50 border-red-500/20 text-[#869F90] hover:text-white hover:border-red-500/40'
                       }`}
                   >
                     {t.label}
@@ -134,8 +135,8 @@ export function RegisterPage() {
 
             {/* System Role Selector */}
             <div>
-              <label className="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2 font-semibold">
-                System Role Authorization *
+              <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-2 font-bold">
+                SYSTEM ROLE AUTHORIZATION *
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
@@ -394,15 +395,15 @@ export function RegisterPage() {
 
             {/* Terms & Declarations */}
             <div className="pt-2">
-              <label className="flex items-start gap-2 text-xs text-slate-300 cursor-pointer">
+              <label className="flex items-start gap-2.5 text-xs text-slate-300 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   required
                   checked={agreedTerms}
                   onChange={(e) => setAgreedTerms(e.target.checked)}
-                  className="mt-0.5 rounded bg-slate-900 border-slate-700 text-sky-500 focus:ring-sky-500/20"
+                  className="mt-0.5 rounded bg-black border-red-500/40 text-[#F20D25] focus:ring-[#F20D25]/40"
                 />
-                <span>
+                <span className="text-[#869F90] font-mono leading-relaxed text-[11px]">
                   I declare that I am an authorized member/dependent of the Armed Forces of India. All details provided for official reporting are true and accurate.
                 </span>
               </label>
@@ -412,16 +413,16 @@ export function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-sm flex items-center justify-center gap-2 transition disabled:opacity-50"
+              className="w-full py-3.5 rounded-full bg-[#F20D25] hover:bg-[#34d399] text-black font-cyber font-bold text-sm shadow-[0_0_20px_rgba(255,38,56,0.4)] flex items-center justify-center gap-2 transition disabled:opacity-50 cursor-pointer uppercase tracking-wider"
             >
-              {loading ? 'Creating Defence Profile...' : 'Complete Registration & Enter Portal'}
+              {loading ? 'CREATING DEFENCE PROFILE…' : 'COMPLETE REGISTRATION & ENTER PORTAL ↗'}
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-slate-800 text-center text-xs text-slate-400">
+          <div className="mt-6 pt-4 border-t border-red-500/15 text-center text-xs text-[#869F90] font-mono">
             Already registered?{' '}
-            <Link to="/login" className="text-sky-400 font-semibold hover:underline">
-              Sign In Here
+            <Link to="/login" className="text-[#F20D25] font-cyber font-bold hover:underline">
+              SIGN IN HERE
             </Link>
           </div>
 

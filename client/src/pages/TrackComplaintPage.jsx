@@ -113,37 +113,55 @@ export function TrackComplaintPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       
       {/* Header & Search Bar */}
-      <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
-        <div className="max-w-xl">
-          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-            <Search className="w-5 h-5 text-sky-400" />
-            Track Case Status & Investigation Progress
+      <div className="glass-panel-glow rounded-3xl p-6 sm:p-8 space-y-5 border border-red-500/20 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-72 h-72 bg-red-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/40 text-[10px] font-mono text-red-300 uppercase tracking-wider mb-3">
+            <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+            MIL-STD-810H Live Incident Tracker
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-display font-black text-white tracking-wide uppercase">
+            Track Case Status & Forensic Ledger
           </h1>
-          <p className="text-xs text-slate-300 mt-1">
-            Check real-time case progression, assigned officer notes, risk classification, and tamper-proof evidence verification.
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Query real-time case status, investigating officer briefings, ML risk scoring, and tamper-proof blockchain evidence verification.
           </p>
         </div>
 
         <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3 pt-2">
-          <input
-            type="text"
-            value={complaintIdInput}
-            onChange={(e) => setComplaintIdInput(e.target.value)}
-            placeholder="Enter Complaint ID (e.g. CRF-2026-000142)"
-            className="flex-1 bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white font-mono uppercase tracking-wider focus:outline-none focus:border-sky-500"
-          />
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-red-400 absolute left-4 top-3.5" />
+            <input
+              type="text"
+              value={complaintIdInput}
+              onChange={(e) => setComplaintIdInput(e.target.value)}
+              placeholder="Enter Complaint ID (e.g. CRF-2026-000142)"
+              className="w-full bg-slate-950/90 border border-red-500/30 rounded-2xl pl-11 pr-4 py-3 text-sm text-white font-mono uppercase tracking-wider focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400/50 transition placeholder:text-slate-600"
+            />
+          </div>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs shadow-sm flex items-center justify-center gap-2 transition disabled:opacity-50"
+            className="px-8 py-3 rounded-2xl bg-red-500 hover:bg-red-400 text-slate-950 font-display font-black text-xs uppercase tracking-wider shadow-glow-neon flex items-center justify-center gap-2 transition disabled:opacity-50"
           >
-            {loading ? 'Searching...' : 'Track Case'}
+            {loading ? (
+              <>
+                <div className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></div>
+                Querying...
+              </>
+            ) : (
+              <>
+                <Search className="w-4 h-4" />
+                Track Case
+              </>
+            )}
           </button>
         </form>
 
         {/* Quick Sample Links */}
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-400 pt-1">
-          <span>Recent Reference IDs:</span>
+          <span className="text-[11px] text-slate-500 uppercase tracking-wider">Quick Select:</span>
           {allIncidents.map(inc => (
             <button
               key={inc._id}
@@ -152,10 +170,10 @@ export function TrackComplaintPage() {
                 setComplaintIdInput(inc.complaintId);
                 searchIncident(inc.complaintId);
               }}
-              className={`px-2.5 py-1 rounded-lg border text-xs transition ${
+              className={`px-3 py-1 rounded-full text-xs font-mono transition ${
                 incident?.complaintId === inc.complaintId 
-                  ? 'bg-sky-950/80 border-sky-600 text-sky-300' 
-                  : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700'
+                  ? 'bg-red-950/80 border border-red-400 text-red-300 shadow-glow-neon' 
+                  : 'bg-slate-900/90 border border-slate-800 text-slate-400 hover:border-red-500/40 hover:text-red-300'
               }`}
             >
               {inc.complaintId}
@@ -165,8 +183,8 @@ export function TrackComplaintPage() {
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-red-950/70 border border-red-800 text-red-300 text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="p-4 rounded-2xl bg-red-950/70 border border-red-500/40 text-red-200 text-xs flex items-center gap-2.5">
+          <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
           <span>{error}</span>
         </div>
       )}
@@ -175,17 +193,17 @@ export function TrackComplaintPage() {
         <div className="space-y-6 animate-fadeIn">
           
           {/* Main Case Overview Banner */}
-          <div className="glass-panel-glow rounded-2xl p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
-              <div className="space-y-0.5">
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-                  Incident Reference Record
+          <div className="glass-panel-glow rounded-3xl p-6 sm:p-7 space-y-5 border border-red-500/30">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono text-red-400 uppercase tracking-widest">
+                  // Case Record Classification
                 </span>
-                <h2 className="text-xl font-mono font-bold text-sky-400">
-                  {incident.complaintId}
+                <h2 className="text-2xl sm:text-3xl font-display font-black text-white tracking-wide flex items-center gap-3">
+                  <span className="text-red-400 text-glow-neon">{incident.complaintId}</span>
                 </h2>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <StatusBadge status={incident.status} />
                 <SeverityBadge severity={incident.severity} />
                 <PriorityBadge priority={incident.priority} />
@@ -193,57 +211,69 @@ export function TrackComplaintPage() {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-              <div>
-                <span className="text-slate-400 block text-[11px]">Lodged Date:</span>
-                <span className="text-white font-medium">{incident.incidentDate}</span>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <span className="text-slate-400 block text-[10px] font-mono uppercase">Lodged Date:</span>
+                <span className="text-white font-medium font-mono text-xs mt-0.5 block">{incident.incidentDate}</span>
               </div>
-              <div>
-                <span className="text-slate-400 block text-[11px]">Threat Category:</span>
-                <span className="text-sky-300 font-medium">{incident.incidentType}</span>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <span className="text-slate-400 block text-[10px] font-mono uppercase">Threat Category:</span>
+                <span className="text-red-400 font-medium text-xs mt-0.5 block">{incident.incidentType}</span>
               </div>
-              <div>
-                <span className="text-slate-400 block text-[11px]">Assigned Officer:</span>
-                <span className="text-amber-300 font-medium">{incident.assignedOfficerName || 'Awaiting Allocation'}</span>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <span className="text-slate-400 block text-[10px] font-mono uppercase">Assigned Officer:</span>
+                <span className="text-amber-400 font-medium text-xs mt-0.5 block">{incident.assignedOfficerName || 'Awaiting Allocation'}</span>
               </div>
-              <div>
-                <span className="text-slate-400 block text-[11px]">Last Updated:</span>
-                <span className="text-white font-medium">{new Date(incident.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <span className="text-slate-400 block text-[10px] font-mono uppercase">Last Updated:</span>
+                <span className="text-white font-medium font-mono text-xs mt-0.5 block">
+                  {new Date(incident.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
-              <p className="text-slate-300">
-                <strong className="text-white">Active Mitigation Action:</strong> Cyber Cell domain sinkhole and nodal bank UPI lien requested. CERT-Army threat advisory circulated.
+            <div className="p-4 rounded-2xl bg-red-950/30 border border-red-500/20 text-xs flex items-start gap-3">
+              <ShieldAlert className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+              <p className="text-slate-300 leading-relaxed">
+                <strong className="text-white">Active Mitigation Action:</strong> Cyber Cell domain sinkhole and nodal bank UPI lien requested. CERT-Army threat advisory circulated to regional military commands.
               </p>
             </div>
           </div>
 
           {/* Visual Step-by-Step Status Timeline */}
-          <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
-              <Clock className="w-4 h-4 text-sky-400" />
-              Investigation Progression Pipeline
-            </h3>
+          <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm sm:text-base font-display font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+                <Clock className="w-4 h-4 text-red-400" />
+                Forensic Investigation Progression
+              </h3>
+              <span className="text-[11px] font-mono text-red-400">
+                Stage {currentStepIdx + 1} of {ALL_STATUSES.length}
+              </span>
+            </div>
 
             {/* Stepper Line */}
-            <div className="grid grid-cols-2 sm:grid-cols-6 gap-2 pt-2">
+            <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 pt-2">
               {ALL_STATUSES.map((st, idx) => {
                 const isPassed = idx <= currentStepIdx;
                 const isCurrent = idx === currentStepIdx;
 
                 return (
-                  <div key={st.id} className="flex flex-col items-center text-center space-y-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold border transition-all ${
+                  <div key={st.id} className="flex flex-col items-center text-center space-y-2.5">
+                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-xs font-display font-bold border transition-all ${
                       isCurrent
-                        ? 'bg-sky-600 text-white border-sky-400 shadow-sm'
+                        ? 'bg-red-500 text-slate-950 border-red-400 shadow-glow-neon scale-110'
                         : isPassed
-                        ? 'bg-emerald-950 text-emerald-300 border-emerald-700'
-                        : 'bg-slate-900 text-slate-500 border-slate-800'
+                        ? 'bg-red-950/80 text-red-300 border-red-500/50'
+                        : 'bg-slate-950 text-slate-600 border-slate-800'
                     }`}>
-                      {isPassed && !isCurrent ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : idx + 1}
+                      {isPassed && !isCurrent ? (
+                        <CheckCircle2 className="w-5 h-5 text-red-400" />
+                      ) : (
+                        idx + 1
+                      )}
                     </div>
-                    <span className={`text-[11px] font-medium leading-tight ${
-                      isCurrent ? 'text-sky-300 font-bold' : isPassed ? 'text-slate-200' : 'text-slate-500'
+                    <span className={`text-[11px] font-mono uppercase tracking-tight leading-tight ${
+                      isCurrent ? 'text-red-300 font-bold' : isPassed ? 'text-slate-200' : 'text-slate-600'
                     }`}>
                       {st.label}
                     </span>
@@ -253,14 +283,16 @@ export function TrackComplaintPage() {
             </div>
 
             {/* Detailed Timeline Events */}
-            <div className="pt-4 border-t border-slate-800 space-y-3">
-              <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold">Activity Log & Event History</h4>
+            <div className="pt-5 border-t border-slate-800/80 space-y-3">
+              <h4 className="text-xs font-mono uppercase text-slate-400 font-semibold tracking-wider">
+                Activity Log & Chain of Events
+              </h4>
               <div className="space-y-2">
                 {incident.timeline?.map((evt, i) => (
-                  <div key={i} className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-start justify-between gap-3 text-xs">
+                  <div key={i} className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex items-start justify-between gap-3 text-xs hover:border-slate-700 transition">
                     <div className="flex items-center gap-2.5">
                       <StatusBadge status={evt.status} />
-                      <span className="text-slate-200 font-normal">{evt.note}</span>
+                      <span className="text-slate-200">{evt.note}</span>
                     </div>
                     <span className="text-[10px] font-mono text-slate-500 shrink-0">
                       {new Date(evt.timestamp).toLocaleString()}
@@ -273,35 +305,35 @@ export function TrackComplaintPage() {
 
           {/* AI Analysis & Indicators Breakdown */}
           {incident.aiAnalysis && (
-            <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-sky-400" />
-                AI Threat Assessment & Risk Indicators
+            <div className="glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-4">
+              <h3 className="text-sm sm:text-base font-display font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+                <Cpu className="w-4 h-4 text-red-400" />
+                AI Threat Assessment & Heuristic Indicators
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-400 block text-[11px] font-mono">Predicted Category:</span>
-                  <span className="text-sm font-bold text-sky-300 mt-0.5 block">{incident.aiAnalysis.classification}</span>
+                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                  <span className="text-slate-400 block text-[10px] font-mono uppercase">Predicted Category:</span>
+                  <span className="text-sm font-display font-bold text-red-400 mt-1 block">{incident.aiAnalysis.classification}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-400 block text-[11px] font-mono">Risk Index:</span>
-                  <span className="text-sm font-bold text-red-400 mt-0.5 block">{incident.aiAnalysis.riskScore}/100</span>
+                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                  <span className="text-slate-400 block text-[10px] font-mono uppercase">Risk Index:</span>
+                  <span className="text-sm font-display font-bold text-red-400 mt-1 block">{incident.aiAnalysis.riskScore}/100</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-slate-400 block text-[11px] font-mono">Model Confidence:</span>
-                  <span className="text-sm font-bold text-emerald-300 mt-0.5 block">
+                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                  <span className="text-slate-400 block text-[10px] font-mono uppercase">Model Confidence:</span>
+                  <span className="text-sm font-display font-bold text-red-300 mt-1 block">
                     {(incident.aiAnalysis.confidence * 100).toFixed(1)}%
                   </span>
                 </div>
               </div>
 
               {incident.aiAnalysis.indicators?.length > 0 && (
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-xs text-slate-400">Identified Threat Vectors:</span>
-                  <div className="flex flex-wrap gap-1.5">
+                <div className="space-y-2 pt-1">
+                  <span className="text-xs text-slate-400 font-mono">Identified Threat Vectors:</span>
+                  <div className="flex flex-wrap gap-2">
                     {incident.aiAnalysis.indicators.map((ind, i) => (
-                      <span key={i} className="px-2.5 py-1 rounded-md bg-slate-900 text-xs font-mono text-sky-300 border border-slate-700">
+                      <span key={i} className="px-3 py-1 rounded-full bg-slate-950 text-xs font-mono text-red-400 border border-red-500/30">
                         • {ind}
                       </span>
                     ))}
@@ -312,14 +344,14 @@ export function TrackComplaintPage() {
           )}
 
           {/* Evidence Vault & Blockchain Integrity Inspector */}
-          <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
+          <div className="glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Award className="w-4 h-4 text-amber-400" />
+              <h3 className="text-sm sm:text-base font-display font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+                <Award className="w-4 h-4 text-red-400" />
                 Cryptographic Evidence & Chain of Custody
               </h3>
-              <span className="text-xs text-emerald-400 flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Integrity Verified
+              <span className="text-xs text-red-400 flex items-center gap-1 font-mono">
+                <ShieldCheck className="w-3.5 h-3.5" /> SHA-256 Ledger Verified
               </span>
             </div>
 
@@ -330,11 +362,11 @@ export function TrackComplaintPage() {
                 {incident.evidences?.map((ev) => {
                   const status = verificationStatus[ev._id];
                   return (
-                    <div key={ev._id} className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2.5">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div key={ev._id} className="p-5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                           <p className="text-xs font-bold text-white">{ev.fileName}</p>
-                          <p className="text-[11px] font-mono text-slate-400">
+                          <p className="text-[11px] font-mono text-slate-400 mt-0.5">
                             {ev.fileType} • {(ev.fileSize / 1024).toFixed(1)} KB • Encrypted with {ev.encryptionAlgorithm}
                           </p>
                         </div>
@@ -343,16 +375,16 @@ export function TrackComplaintPage() {
                           type="button"
                           onClick={() => verifyEvidenceHash(ev)}
                           disabled={verifyingHash === ev._id}
-                          className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 text-xs font-mono border border-slate-700 flex items-center gap-1.5 transition"
+                          className="pill-glass px-4 py-2 text-xs font-mono text-red-300 hover:text-white flex items-center gap-2 transition"
                         >
                           {verifyingHash === ev._id ? (
                             <>
-                              <div className="w-3 h-3 border border-sky-400 border-t-transparent rounded-full animate-spin"></div>
+                              <div className="w-3.5 h-3.5 border-2 border-red-400 border-t-transparent rounded-full animate-spin"></div>
                               Re-Hashing...
                             </>
                           ) : (
                             <>
-                              <Hash className="w-3.5 h-3.5" />
+                              <Hash className="w-3.5 h-3.5 text-red-400" />
                               Verify Tamper Proofing
                             </>
                           )}
@@ -360,23 +392,23 @@ export function TrackComplaintPage() {
                       </div>
 
                       {/* Hash Box */}
-                      <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 font-mono text-[10px] break-all text-slate-300">
-                        <span className="text-slate-500">SHA-256 Digest:</span> {ev.sha256Hash}
+                      <div className="p-3 rounded-xl bg-black/60 border border-slate-800/80 font-mono text-[11px] break-all text-slate-300">
+                        <span className="text-red-500 font-bold">SHA-256 Digest:</span> {ev.sha256Hash}
                       </div>
 
                       {/* Blockchain Ledger Transaction */}
                       {ev.blockchain && (
-                        <div className="flex flex-wrap items-center justify-between text-[10px] font-mono text-slate-400 pt-1 border-t border-slate-800/80">
-                          <span>Ledger: <strong className="text-sky-300">{ev.blockchain.network}</strong></span>
+                        <div className="flex flex-wrap items-center justify-between text-[10px] font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                          <span>Ledger: <strong className="text-red-400">{ev.blockchain.network}</strong></span>
                           <span>Block #{ev.blockchain.blockNumber}</span>
-                          <span className="text-emerald-400">Tx: {ev.blockchain.transactionId?.substring(0, 20)}...</span>
+                          <span className="text-red-400 font-bold">Tx: {ev.blockchain.transactionId?.substring(0, 20)}...</span>
                         </div>
                       )}
 
                       {/* Verification Badge */}
                       {status && (
-                        <div className="p-2.5 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <div className="p-3.5 rounded-2xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs flex items-center gap-2.5 shadow-glow-neon">
+                          <CheckCircle2 className="w-4 h-4 text-red-400 shrink-0" />
                           <span>
                             <strong>INTEGRITY MATCH CONFIRMED:</strong> Evidence SHA-256 matches blockchain immutable record exactly at {status.checkedAt}. No tampering detected.
                           </span>
@@ -391,15 +423,15 @@ export function TrackComplaintPage() {
 
           {/* Officer Investigation Notes */}
           {incident.officerNotes?.length > 0 && (
-            <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-3">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-amber-400" />
-                Investigating Officer Notes & Direct Advisories
+            <div className="glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-4">
+              <h3 className="text-sm sm:text-base font-display font-bold text-white uppercase tracking-wider flex items-center gap-2.5">
+                <MessageSquare className="w-4 h-4 text-red-400" />
+                Investigating Officer Briefings & Direct Advisories
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {incident.officerNotes.map((note) => (
-                  <div key={note.id} className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-sky-400">
+                  <div key={note.id} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-1.5">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-red-400">
                       <span className="font-semibold">{note.author}</span>
                       <span className="text-slate-500">{note.date}</span>
                     </div>

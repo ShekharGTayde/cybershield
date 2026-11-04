@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { SyncProvider } from './context/SyncContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Layout } from './components/layout/Layout';
 
 // Pages
@@ -42,67 +43,69 @@ function ProtectedRoute({ children, requiredRole }) {
 
 export function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <NotificationProvider>
-          <SyncProvider>
-            <Routes>
-              {/* Public & Landing Layout */}
-              <Route element={<Layout withSidebar={false} />}>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-              </Route>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <NotificationProvider>
+            <SyncProvider>
+              <Routes>
+                {/* Public & Landing Layout */}
+                <Route element={<Layout withSidebar={false} />}>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                </Route>
 
-              {/* Main Defence Portal with Tactical Sidebar */}
-              <Route element={<Layout withSidebar={true} />}>
-                <Route path="/dashboard" element={
-                  <ProtectedRoute>
-                    <UserDashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/report" element={
-                  <ProtectedRoute>
-                    <ReportIncidentPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/track" element={
-                  <ProtectedRoute>
-                    <TrackComplaintPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/analyze" element={
-                  <ProtectedRoute>
-                    <ThreatAnalysisPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/awareness" element={
-                  <ProtectedRoute>
-                    <CyberAwarenessPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/sync" element={
-                  <ProtectedRoute>
-                    <OfflineSyncPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/investigator" element={
-                  <ProtectedRoute requiredRole="INVESTIGATOR">
-                    <InvestigatorDashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="/admin" element={
-                  <ProtectedRoute requiredRole="ADMIN">
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            </Routes>
-          </SyncProvider>
-        </NotificationProvider>
-      </AuthProvider>
-    </BrowserRouter>
+                {/* Main Defence Portal with Tactical Sidebar */}
+                <Route element={<Layout withSidebar={true} />}>
+                  <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                      <UserDashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/report" element={
+                    <ProtectedRoute>
+                      <ReportIncidentPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/track" element={
+                    <ProtectedRoute>
+                      <TrackComplaintPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/analyze" element={
+                    <ProtectedRoute>
+                      <ThreatAnalysisPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/awareness" element={
+                    <ProtectedRoute>
+                      <CyberAwarenessPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/sync" element={
+                    <ProtectedRoute>
+                      <OfflineSyncPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/investigator" element={
+                    <ProtectedRoute requiredRole="INVESTIGATOR">
+                      <InvestigatorDashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/admin" element={
+                    <ProtectedRoute requiredRole="ADMIN">
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+            </SyncProvider>
+          </NotificationProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

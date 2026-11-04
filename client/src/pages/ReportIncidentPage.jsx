@@ -210,39 +210,44 @@ export function ReportIncidentPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       
       {/* Wizard Header */}
-      <div className="glass-panel-glow rounded-2xl p-6 border border-slate-800">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-slate-800 text-sky-300 text-xs font-medium border border-slate-700 mb-1">
-              <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
-              Grievance & Incident Registration
+      <div className="glass-panel-glow rounded-3xl p-6 sm:p-8 border border-red-500/25 shadow-xl relative overflow-hidden">
+        <div className="pointer-events-none absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[#F20D25]/10 blur-3xl" />
+        
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 text-[#F20D25] text-xs font-cyber font-bold border border-red-500/30 mb-1">
+              <span className="w-2 h-2 rounded-full bg-[#F20D25] animate-pulse shadow-[0_0_8px_#F20D25]" />
+              OFFICIAL GRIEVANCE // CERT-ARMY DESK
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase">
               Report Cyber Threat / Fraud Incident
             </h1>
+            <p className="text-xs text-[#869F90] font-mono">
+              Heuristic classification & SHA-256 tamper-proof evidence preservation
+            </p>
           </div>
 
           {/* Stepper Progress */}
-          <div className="flex items-center gap-2 text-xs">
-            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
-              step >= 1 ? 'bg-sky-950/80 border-sky-600 text-sky-300 font-semibold' : 'bg-slate-900 border-slate-800 text-slate-500'
+          <div className="flex items-center gap-2 text-xs font-cyber">
+            <div className={`px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
+              step >= 1 ? 'bg-[#F20D25] border-[#F20D25] text-black font-bold shadow-[0_0_12px_rgba(255,38,56,0.35)]' : 'bg-black/40 border-red-500/20 text-[#869F90]'
             }`}>
               <span>1</span>
-              <span className="hidden sm:inline">Incident Info</span>
+              <span className="hidden sm:inline">INCIDENT INFO</span>
             </div>
-            <span className="text-slate-600">→</span>
-            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
-              step >= 2 ? 'bg-sky-950/80 border-sky-600 text-sky-300 font-semibold' : 'bg-slate-900 border-slate-800 text-slate-500'
+            <span className="text-red-500/40">―</span>
+            <div className={`px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
+              step >= 2 ? 'bg-[#F20D25] border-[#F20D25] text-black font-bold shadow-[0_0_12px_rgba(255,38,56,0.35)]' : 'bg-black/40 border-red-500/20 text-[#869F90]'
             }`}>
               <span>2</span>
-              <span className="hidden sm:inline">Evidence Files</span>
+              <span className="hidden sm:inline">EVIDENCE VAULT</span>
             </div>
-            <span className="text-slate-600">→</span>
-            <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
-              step >= 3 ? 'bg-sky-950/80 border-sky-600 text-sky-300 font-semibold' : 'bg-slate-900 border-slate-800 text-slate-500'
+            <span className="text-red-500/40">―</span>
+            <div className={`px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
+              step >= 3 ? 'bg-[#F20D25] border-[#F20D25] text-black font-bold shadow-[0_0_12px_rgba(255,38,56,0.35)]' : 'bg-black/40 border-red-500/20 text-[#869F90]'
             }`}>
               <span>3</span>
-              <span className="hidden sm:inline">Review & Submit</span>
+              <span className="hidden sm:inline">AI TRIAGE & SUBMIT</span>
             </div>
           </div>
         </div>
@@ -250,8 +255,8 @@ export function ReportIncidentPage() {
 
       {/* Success Modal / Result View */}
       {submissionResult && (
-        <div className="glass-panel-glow rounded-2xl p-8 border border-emerald-500/40 text-center space-y-6 animate-fadeIn">
-          <div className="inline-flex p-4 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 shadow-glow-emerald">
+        <div className="glass-panel-glow rounded-2xl p-8 border border-red-500/40 text-center space-y-6 animate-fadeIn">
+          <div className="inline-flex p-4 rounded-full bg-red-950 text-red-400 border border-red-800 shadow-glow-emerald">
             <CheckCircle2 className="w-10 h-10" />
           </div>
 
@@ -323,14 +328,14 @@ export function ReportIncidentPage() {
 
       {/* STEP 1: Incident Information */}
       {!submissionResult && step === 1 && (
-        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <FileText className="w-5 h-5 text-cyan-400" />
-              Step 1: Incident Information & Characteristics
+        <div className="glass-panel-glow rounded-3xl p-6 sm:p-9 border border-red-500/25 space-y-6 shadow-2xl">
+          <div className="border-b border-red-500/15 pb-4">
+            <h2 className="text-lg font-display font-bold text-white flex items-center gap-2 uppercase">
+              <FileText className="w-5 h-5 text-[#F20D25]" />
+              STEP 1: Incident Characteristics & Context
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Provide details of the suspected cyber fraud or security anomaly.
+            <p className="text-xs text-[#869F90] mt-1 font-mono">
+              Provide verifiable parameters of the suspected cyber fraud, honeytrap, or OPSEC anomaly.
             </p>
           </div>
 
@@ -340,25 +345,25 @@ export function ReportIncidentPage() {
               
               {/* Incident Type */}
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono text-cyan-400 uppercase tracking-wider mb-1.5 font-semibold">
-                  Incident Threat Category (incidentType) *
+                <label className="block text-xs font-cyber text-[#F20D25] uppercase tracking-wider mb-1.5 font-bold">
+                  INCIDENT THREAT CATEGORY (incidentType) *
                 </label>
                 <select
                   name="incidentType"
                   value={formData.incidentType}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 font-medium"
+                  className="w-full bg-black/60 border border-red-500/25 rounded-2xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#F20D25] focus:ring-1 focus:ring-[#F20D25]/40 font-cyber font-semibold"
                 >
                   {INCIDENT_TYPES.map(t => (
-                    <option key={t.value} value={t.value}>{t.label}</option>
+                    <option key={t.value} value={t.value} className="bg-[#0A100C]">{t.label}</option>
                   ))}
                 </select>
               </div>
 
               {/* Title */}
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Incident Title / Headline *
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  INCIDENT HEADLINE / SUMMARY *
                 </label>
                 <input
                   type="text"
@@ -367,138 +372,138 @@ export function ReportIncidentPage() {
                   value={formData.title}
                   onChange={handleInputChange}
                   placeholder="e.g. Fraudulent SMS claiming SPARSH Pension locked with link to sparsh-update.xyz"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-black/60 border border-red-500/25 rounded-2xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25] focus:ring-1 focus:ring-[#F20D25]/40 transition"
                 />
               </div>
 
               {/* Incident Date */}
               <div>
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Date of Incident *
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  DATE OF INCIDENT *
                 </label>
                 <div className="relative">
-                  <Calendar className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <Calendar className="w-4 h-4 text-[#869F90] absolute left-3.5 top-3" />
                   <input
                     type="date"
                     required
                     name="incidentDate"
                     value={formData.incidentDate}
                     onChange={handleInputChange}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-black/60 border border-red-500/25 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25]"
                   />
                 </div>
               </div>
 
               {/* Incident Time */}
               <div>
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Approximate Time *
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  APPROXIMATE TIME *
                 </label>
                 <div className="relative">
-                  <Clock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <Clock className="w-4 h-4 text-[#869F90] absolute left-3.5 top-3" />
                   <input
                     type="time"
                     required
                     name="incidentTime"
                     value={formData.incidentTime}
                     onChange={handleInputChange}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-black/60 border border-red-500/25 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25]"
                   />
                 </div>
               </div>
 
               {/* Channel */}
               <div>
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Attack / Delivery Channel *
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  ATTACK / DELIVERY CHANNEL *
                 </label>
                 <select
                   name="channel"
                   value={formData.channel}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-black/60 border border-red-500/25 rounded-2xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25]"
                 >
-                  <option value="SMS">SMS Message</option>
-                  <option value="WHATSAPP">WhatsApp Forward / Group</option>
-                  <option value="EMAIL">Email / Official Inbound</option>
-                  <option value="CALL">Phone Call / Vishing</option>
-                  <option value="WEB">Web Browser / Malicious Link</option>
-                  <option value="SOCIAL_MEDIA">Social Media (LinkedIn/FB/Insta)</option>
-                  <option value="OTHER">Other / USB / Physical</option>
+                  <option value="SMS" className="bg-[#0A100C]">SMS Message</option>
+                  <option value="WHATSAPP" className="bg-[#0A100C]">WhatsApp Forward / Group</option>
+                  <option value="EMAIL" className="bg-[#0A100C]">Email / Official Inbound</option>
+                  <option value="CALL" className="bg-[#0A100C]">Phone Call / Vishing</option>
+                  <option value="WEB" className="bg-[#0A100C]">Web Browser / Malicious Link</option>
+                  <option value="SOCIAL_MEDIA" className="bg-[#0A100C]">Social Media (LinkedIn/FB/Insta)</option>
+                  <option value="OTHER" className="bg-[#0A100C]">Other / USB / Physical</option>
                 </select>
               </div>
 
               {/* Suspected Source */}
               <div>
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Suspected Source (Phone / Email / URL / Handle)
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  SUSPECTED SENDER (PHONE / URL / EMAIL)
                 </label>
                 <input
                   type="text"
                   name="suspectedSource"
                   value={formData.suspectedSource}
                   onChange={handleInputChange}
-                  placeholder="e.g. +91 94002 11984 or http://fake-link.com"
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-500"
+                  placeholder="e.g. +91 94002 11984 or http://fake-link.xyz"
+                  className="w-full bg-black/60 border border-red-500/25 rounded-2xl px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25]"
                 />
               </div>
 
               {/* Location */}
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Incident Geographic Location / Military Station
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  STATION LOCATION / CANTONMENT
                 </label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <MapPin className="w-4 h-4 text-[#869F90] absolute left-3.5 top-3" />
                   <input
                     type="text"
                     name="location"
                     value={formData.location}
                     onChange={handleInputChange}
                     placeholder="e.g. Northern Command HQ / Pune Cantonment"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-black/60 border border-red-500/25 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25]"
                   />
                 </div>
               </div>
 
               {/* Financial Loss Section */}
-              <div className="sm:col-span-2 p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3">
-                <label className="flex items-center gap-2 cursor-pointer">
+              <div className="sm:col-span-2 p-4.5 rounded-2xl bg-black/50 border border-red-500/20 space-y-3">
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     name="financialLoss"
                     checked={formData.financialLoss}
                     onChange={handleInputChange}
-                    className="rounded bg-slate-950 border-slate-700 text-rose-500 focus:ring-rose-500/20"
+                    className="rounded bg-black border-red-500/40 text-rose-500 focus:ring-rose-500/30"
                   />
-                  <span className="text-xs font-semibold text-white">
-                    Did this incident involve financial fraud or unauthorized money deduction?
+                  <span className="text-xs font-cyber font-bold text-white uppercase tracking-wide">
+                    Did this incident involve financial fraud or unauthorized funds deduction?
                   </span>
                 </label>
 
                 {formData.financialLoss && (
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1">Loss Amount</label>
+                      <label className="block text-[11px] font-mono text-[#869F90] mb-1">Loss Amount</label>
                       <input
                         type="number"
                         name="lossAmount"
                         value={formData.lossAmount}
                         onChange={handleInputChange}
                         placeholder="e.g. 25000"
-                        className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-rose-500"
+                        className="w-full bg-black/80 border border-rose-500/40 rounded-xl px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-rose-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-mono text-slate-400 mb-1">Currency</label>
+                      <label className="block text-[11px] font-mono text-[#869F90] mb-1">Currency</label>
                       <select
                         name="currency"
                         value={formData.currency}
                         onChange={handleInputChange}
-                        className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-rose-500"
+                        className="w-full bg-black/80 border border-red-500/25 rounded-xl px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25]"
                       >
-                        <option value="INR">INR (₹)</option>
-                        <option value="USD">USD ($)</option>
+                        <option value="INR" className="bg-[#0A100C]">INR (₹)</option>
+                        <option value="USD" className="bg-[#0A100C]">USD ($)</option>
                       </select>
                     </div>
                   </div>
@@ -507,8 +512,8 @@ export function ReportIncidentPage() {
 
               {/* Description */}
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono text-defence-muted uppercase tracking-wider mb-1.5">
-                  Detailed Incident Narrative & Context *
+                <label className="block text-xs font-cyber text-[#869F90] uppercase tracking-wider mb-1.5 font-bold">
+                  INCIDENT NARRATIVE & SEQUENCE OF EVENTS *
                 </label>
                 <textarea
                   required
@@ -516,19 +521,19 @@ export function ReportIncidentPage() {
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
-                  placeholder="Explain exactly what happened, what message was received, what actions were taken, and any demands made by the suspect..."
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-cyan-500 leading-relaxed"
+                  placeholder="Explain exactly what happened, what message was received, what link was clicked, and any OTP demands made..."
+                  className="w-full bg-black/60 border border-red-500/25 rounded-2xl p-4 text-sm text-white font-mono focus:outline-none focus:border-[#F20D25] leading-relaxed"
                 />
               </div>
 
             </div>
 
-            <div className="flex justify-end pt-4 border-t border-slate-800">
+            <div className="flex justify-end pt-4 border-t border-red-500/15">
               <button
                 type="submit"
-                className="px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs shadow-glow-cyan flex items-center gap-2 transition"
+                className="px-6 py-3 rounded-full bg-[#F20D25] hover:bg-[#34d399] text-black font-cyber font-bold text-xs shadow-[0_0_20px_rgba(255,38,56,0.4)] flex items-center gap-2 transition cursor-pointer uppercase tracking-wider"
               >
-                Proceed to Evidence Vault
+                PROCEED TO EVIDENCE VAULT
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -538,19 +543,19 @@ export function ReportIncidentPage() {
 
       {/* STEP 2: Evidence Vault with SHA-256 Hashing */}
       {!submissionResult && step === 2 && (
-        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <UploadCloud className="w-5 h-5 text-sky-400" />
-              Step 2: Digital Evidence Upload & Cryptographic Hash
+        <div className="glass-panel-glow rounded-3xl p-6 sm:p-9 border border-red-500/25 space-y-6 shadow-2xl">
+          <div className="border-b border-red-500/15 pb-4">
+            <h2 className="text-lg font-display font-bold text-white flex items-center gap-2 uppercase">
+              <UploadCloud className="w-5 h-5 text-[#F20D25]" />
+              STEP 2: Digital Evidence Upload & Cryptographic Anchoring
             </h2>
-            <p className="text-xs text-slate-300 mt-1">
-              Upload screenshots, audio recordings, email headers, call logs, or suspicious files. Each file is verified with SHA-256 for legal integrity.
+            <p className="text-xs text-[#869F90] mt-1 font-mono">
+              Upload screenshots, audio clips, email headers, or APK files. Each file is verified with SHA-256 for legal chain of custody.
             </p>
           </div>
 
           {/* Upload Dropzone */}
-          <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/60 rounded-2xl p-8 text-center bg-slate-900/40 transition-colors">
+          <div className="border-2 border-dashed border-red-500/30 hover:border-[#F20D25] rounded-3xl p-8 text-center bg-black/40 transition-all group">
             <input
               type="file"
               multiple
@@ -559,49 +564,49 @@ export function ReportIncidentPage() {
               id="evidence-file-input"
             />
             <label htmlFor="evidence-file-input" className="cursor-pointer flex flex-col items-center space-y-3">
-              <div className="p-4 rounded-full bg-cyan-950/80 text-cyan-400 border border-cyan-800 shadow-glow-cyan">
-                <UploadCloud className="w-8 h-8" />
+              <div className="p-4 rounded-2xl bg-[#F20D25]/10 text-[#F20D25] border border-[#F20D25]/40 shadow-[0_0_20px_rgba(255,38,56,0.25)] group-hover:scale-105 transition-transform">
+                <UploadCloud className="w-8 h-8 stroke-[2.2]" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">Click or drag files to upload as Evidence</p>
-                <p className="text-xs text-slate-400 mt-1">
-                  Supported formats: Screenshots (PNG/JPG), Audio recordings (MP3/WAV), PDFs, Call logs, Suspicious files
+                <p className="text-sm font-cyber font-bold text-white uppercase tracking-wider">CLICK OR DRAG FILES TO ANCHOR AS EVIDENCE</p>
+                <p className="text-xs text-[#869F90] mt-1 font-mono">
+                  Supported: Screenshots (PNG/JPG), Audio (MP3/WAV), PDFs, Call logs, Suspicious APKs
                 </p>
               </div>
-              <span className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-cyan-300 border border-slate-700">
-                Browse Files
+              <span className="pill-glass px-5 py-2 text-xs font-cyber tracking-wider hover:border-[#F20D25]">
+                BROWSE SECURE FILES
               </span>
             </label>
           </div>
 
           {isHashing && (
-            <div className="p-3 rounded-xl bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs flex items-center gap-2 font-mono">
-              <div className="w-3.5 h-3.5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-              <span>Computing SHA-256 cryptographic digest via Web Crypto API...</span>
+            <div className="p-3.5 rounded-2xl bg-black/80 border border-red-500/40 text-[#F20D25] text-xs flex items-center gap-2 font-mono">
+              <div className="w-3.5 h-3.5 border-2 border-[#F20D25] border-t-transparent rounded-full animate-spin"></div>
+              <span>COMPUTING SHA-256 CRYPTOGRAPHIC DIGEST VIA WEB CRYPTO API…</span>
             </div>
           )}
 
           {/* List of uploaded evidences with SHA-256 and Blockchain status */}
           {evidences.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold">
-                Anchored Evidence Items ({evidences.length})
+              <h3 className="text-xs font-cyber uppercase tracking-widest text-[#F20D25] font-bold">
+                ANCHORED EVIDENCE ITEMS ({evidences.length})
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {evidences.map((ev) => (
-                  <div key={ev._id} className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div key={ev._id} className="p-4 rounded-2xl bg-black/60 border border-red-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
                     <div className="space-y-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-white truncate max-w-xs">{ev.fileName}</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-cyan-400 border border-slate-700">
+                        <span className="text-xs font-cyber font-bold text-white truncate max-w-xs">{ev.fileName}</span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black text-[#F20D25] border border-red-500/30">
                           {ev.fileType} • {(ev.fileSize / 1024).toFixed(1)} KB
                         </span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-red-950 text-[#F20D25] border border-red-600/40">
                           AES-256-GCM
                         </span>
                       </div>
-                      <div className="font-mono text-[10px] text-slate-400 truncate max-w-md">
-                        SHA-256: <span className="text-cyan-300">{ev.sha256Hash}</span>
+                      <div className="font-mono text-[10px] text-[#869F90] truncate max-w-md">
+                        SHA-256: <span className="text-[#F20D25]">{ev.sha256Hash}</span>
                       </div>
                       <div className="font-mono text-[9px] text-slate-500">
                         Blockchain Tx: {ev.blockchain?.transactionId?.substring(0, 24)}... (Block #{ev.blockchain?.blockNumber})
@@ -611,7 +616,7 @@ export function ReportIncidentPage() {
                     <button
                       type="button"
                       onClick={() => removeEvidence(ev._id)}
-                      className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-800 transition"
+                      className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-950/20 border border-transparent hover:border-red-500/30 transition cursor-pointer"
                       title="Remove"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -622,30 +627,30 @@ export function ReportIncidentPage() {
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-between pt-4 border-t border-red-500/15">
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-2"
+              className="pill-glass px-5 py-2.5 rounded-full text-xs font-cyber tracking-wider"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              BACK
             </button>
 
             <button
               type="button"
               disabled={isEvaluating}
               onClick={handleProceedToReview}
-              className="px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs shadow-glow-cyan flex items-center gap-2 transition disabled:opacity-50"
+              className="px-6 py-3 rounded-full bg-[#F20D25] hover:bg-[#34d399] text-black font-cyber font-bold text-xs shadow-[0_0_20px_rgba(255,38,56,0.4)] flex items-center gap-2 transition disabled:opacity-50 cursor-pointer uppercase tracking-wider"
             >
               {isEvaluating ? (
                 <>
-                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Running AI Threat Engine...
+                  <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                  RUNNING AI HEURISTIC ENGINE…
                 </>
               ) : (
                 <>
-                  Proceed to AI Review & Risk Score
+                  PROCEED TO AI REVIEW & RISK SCORE
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -656,19 +661,19 @@ export function ReportIncidentPage() {
 
       {/* STEP 3: AI Threat Classification & Final Confirmation */}
       {!submissionResult && step === 3 && (
-        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-cyan-400" />
-              Step 3: AI Threat Assessment & Final Submission
+        <div className="glass-panel-glow rounded-3xl p-6 sm:p-9 border border-red-500/25 space-y-6 shadow-2xl">
+          <div className="border-b border-red-500/15 pb-4">
+            <h2 className="text-lg font-display font-bold text-white flex items-center gap-2 uppercase">
+              <Sparkles className="w-5 h-5 text-[#F20D25]" />
+              STEP 3: AI Threat Assessment & Final Grievance Dispatch
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Review automated AI classification, priority calculation, and submit to CERT-Army triage queue.
+            <p className="text-xs text-[#869F90] mt-1 font-mono">
+              Review automated AI classification, calculated priority level, and dispatch to CERT-Army triage radar.
             </p>
           </div>
 
           {submitError && (
-            <div className="p-4 rounded-xl bg-red-950/80 border border-red-800 text-red-300 text-xs flex items-center gap-3">
+            <div className="p-4 rounded-2xl bg-red-950/80 border border-red-500/50 text-red-300 text-xs flex items-center gap-3 font-mono">
               <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
               <span>{submitError}</span>
             </div>
@@ -676,11 +681,11 @@ export function ReportIncidentPage() {
 
           {/* AI Analysis Card (SRD Section 31) */}
           {aiPreview && (
-            <div className="p-5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+            <div className="p-6 rounded-3xl bg-black/70 border border-red-500/35 space-y-4 shadow-xl">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-red-500/15">
                 <div className="flex items-center gap-2">
-                  <Cpu className="w-5 h-5 text-cyan-400" />
-                  <span className="font-bold text-white text-sm">Automated AI Threat Assessment</span>
+                  <Cpu className="w-5 h-5 text-[#F20D25]" />
+                  <span className="font-cyber font-bold text-white text-sm uppercase tracking-wide">AUTOMATED AI THREAT ASSESSMENT</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <SeverityBadge severity={aiPreview.calculatedSeverity} />
@@ -689,34 +694,34 @@ export function ReportIncidentPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 block text-[10px]">Predicted Category:</span>
-                  <span className="text-base font-bold text-cyan-300">{aiPreview.prediction.label}</span>
+                <div className="p-3.5 rounded-2xl bg-black border border-red-500/20">
+                  <span className="text-[#869F90] block text-[10px] uppercase">PREDICTED CATEGORY:</span>
+                  <span className="text-base font-bold text-[#F20D25] font-cyber">{aiPreview.prediction.label}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 block text-[10px]">Threat Risk Score:</span>
-                  <span className={`text-base font-bold ${
+                <div className="p-3.5 rounded-2xl bg-black border border-red-500/20">
+                  <span className="text-[#869F90] block text-[10px] uppercase">THREAT RISK SCORE:</span>
+                  <span className={`text-base font-bold font-display ${
                     aiPreview.prediction.riskScore >= 80 ? 'text-red-400' : 'text-amber-400'
                   }`}>
                     {aiPreview.prediction.riskScore} / 100
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 block text-[10px]">ML Confidence:</span>
-                  <span className="text-base font-bold text-emerald-400">
+                <div className="p-3.5 rounded-2xl bg-black border border-red-500/20">
+                  <span className="text-[#869F90] block text-[10px] uppercase">ML ENGINE CONFIDENCE:</span>
+                  <span className="text-base font-bold text-red-400 font-display">
                     {(aiPreview.prediction.confidence * 100).toFixed(1)}%
                   </span>
                 </div>
               </div>
 
               <div className="text-xs space-y-2">
-                <p className="text-slate-300">
-                  <strong className="text-white">CERT Recommendation:</strong> {aiPreview.recommendation}
+                <p className="text-slate-200">
+                  <strong className="text-[#F20D25] font-cyber uppercase tracking-wider">CERT Recommendation:</strong> {aiPreview.recommendation}
                 </p>
                 {aiPreview.indicators?.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {aiPreview.indicators.map((ind, i) => (
-                      <span key={i} className="px-2 py-0.5 rounded bg-slate-950 text-[11px] font-mono text-cyan-400 border border-slate-800">
+                      <span key={i} className="px-2.5 py-0.5 rounded-full bg-white/[0.05] text-[11px] font-mono text-[#F20D25] border border-red-500/25">
                         ✓ {ind}
                       </span>
                     ))}
@@ -727,48 +732,48 @@ export function ReportIncidentPage() {
           )}
 
           {/* Summary of Incident */}
-          <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2 text-xs">
-            <h3 className="font-mono uppercase font-bold text-slate-400 text-[11px]">Submission Summary:</h3>
-            <p><strong>Title:</strong> {formData.title}</p>
-            <p><strong>Type:</strong> {formData.incidentType} | <strong>Channel:</strong> {formData.channel}</p>
-            <p><strong>Date & Station:</strong> {formData.incidentDate} at {formData.incidentTime} ({formData.location})</p>
-            <p><strong>Evidence Items:</strong> {evidences.length} files attached with SHA-256 integrity hashes</p>
+          <div className="p-5 rounded-2xl bg-black/40 border border-red-500/20 space-y-2 text-xs font-mono">
+            <h3 className="font-cyber uppercase font-bold text-[#F20D25] text-xs tracking-wider">SUBMISSION SUMMARY:</h3>
+            <p><strong className="text-white">Title:</strong> {formData.title}</p>
+            <p><strong className="text-white">Type:</strong> {formData.incidentType} | <strong className="text-white">Channel:</strong> {formData.channel}</p>
+            <p><strong className="text-white">Station:</strong> {formData.incidentDate} at {formData.incidentTime} ({formData.location})</p>
+            <p><strong className="text-white">Evidence:</strong> {evidences.length} files attached with SHA-256 hashes</p>
           </div>
 
           {!isOnline && (
-            <div className="p-3 rounded-xl bg-amber-950/80 border border-amber-800 text-amber-300 text-xs flex items-center gap-2 font-mono">
+            <div className="p-3.5 rounded-2xl bg-amber-950/80 border border-amber-500/40 text-amber-300 text-xs flex items-center gap-2 font-mono">
               <WifiOff className="w-4 h-4 shrink-0 text-amber-400" />
               <span>
-                <strong>Offline Connectivity:</strong> This report will be encrypted and saved in your browser's IndexedDB and dispatched once online.
+                <strong>OFFLINE MODE:</strong> This report will be encrypted in IndexedDB and dispatched to CERT-Army upon connectivity.
               </span>
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-between pt-4 border-t border-red-500/15">
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-2"
+              className="pill-glass px-5 py-2.5 rounded-full text-xs font-cyber tracking-wider"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              BACK
             </button>
 
             <button
               type="button"
               disabled={isSubmitting}
               onClick={handleSubmitFinal}
-              className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs shadow-glow-red flex items-center gap-2 transition disabled:opacity-50"
+              className="px-8 py-3.5 rounded-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-cyber font-bold text-xs shadow-[0_0_20px_rgba(239,68,68,0.4)] flex items-center gap-2 transition disabled:opacity-50 cursor-pointer uppercase tracking-wider"
             >
               {isSubmitting ? (
                 <>
                   <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Submitting Report...
+                  SUBMITTING TO CERT-ARMY…
                 </>
               ) : (
                 <>
                   <ShieldAlert className="w-4 h-4" />
-                  Confirm & Submit Incident to CERT-Army
+                  CONFIRM & DISPATCH INCIDENT TO CERT-ARMY ↗
                 </>
               )}
             </button>

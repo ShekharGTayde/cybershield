@@ -85,16 +85,18 @@ export function CyberAwarenessPage() {
     <div className="max-w-5xl mx-auto space-y-8">
       
       {/* Header */}
-      <div className="glass-panel-glow rounded-2xl p-6 sm:p-8 border border-slate-800">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-sky-300 text-xs font-medium border border-slate-700 w-fit mb-2">
-          <BookOpen className="w-4 h-4 text-sky-400" />
-          Security Awareness & Defence Protocols
+      <div className="glass-panel-glow rounded-3xl p-6 sm:p-8 border border-red-500/20 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-red-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/40 text-[10px] font-mono text-red-300 uppercase tracking-wider mb-3">
+          <BookOpen className="w-3.5 h-3.5 text-red-400" />
+          Security Protocols & Counter-Espionage Guidelines
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-display font-black text-white tracking-wide uppercase">
           Cyber Defence & OPSEC Awareness Hub
         </h1>
-        <p className="text-xs sm:text-sm text-slate-300 mt-1">
-          Standard Operating Procedures (SOPs), anti-phishing guidelines, and cyber defense protocols for armed forces personnel and families.
+        <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
+          Standard Operating Procedures (SOPs), counter-honeytrap guidelines, digital life certificate safety, and mobile security for armed forces personnel and veterans.
         </p>
       </div>
 
@@ -106,15 +108,15 @@ export function CyberAwarenessPage() {
             <button
               key={mod.id}
               onClick={() => setSelectedModule(mod)}
-              className={`p-5 rounded-2xl text-left border transition-all ${
+              className={`p-5 rounded-3xl text-left border transition-all ${
                 isSelected
-                  ? 'bg-slate-800/95 border-sky-500 text-white shadow-sm'
-                  : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700'
+                  ? 'bg-slate-900/90 border-red-400 text-white shadow-glow-neon scale-[1.02]'
+                  : 'bg-slate-950/70 border-slate-800/80 text-slate-300 hover:border-slate-700'
               }`}
             >
-              <span className="text-[10px] font-mono text-sky-400 uppercase">{mod.category}</span>
-              <h3 className="text-sm font-bold text-white mt-1 line-clamp-2">{mod.title}</h3>
-              <span className="text-[11px] font-mono text-slate-500 mt-2 block">{mod.readTime}</span>
+              <span className="text-[10px] font-mono text-red-400 uppercase tracking-widest block font-bold">{mod.category}</span>
+              <h3 className="text-sm font-bold text-white mt-1.5 line-clamp-2">{mod.title}</h3>
+              <span className="text-[11px] font-mono text-slate-500 mt-3 block">{mod.readTime}</span>
             </button>
           );
         })}
@@ -122,13 +124,13 @@ export function CyberAwarenessPage() {
 
       {/* Selected Module Detail View */}
       {selectedModule && (
-        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fadeIn">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+        <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fadeIn">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
             <div>
-              <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider">{selectedModule.category}</span>
-              <h2 className="text-xl font-bold text-white mt-0.5">{selectedModule.title}</h2>
+              <span className="text-xs font-mono text-red-400 uppercase tracking-wider font-bold">{selectedModule.category}</span>
+              <h2 className="text-xl sm:text-2xl font-display font-bold text-white mt-0.5">{selectedModule.title}</h2>
             </div>
-            <span className="px-3 py-1 rounded-full bg-slate-800 text-xs font-mono text-slate-300">
+            <span className="pill-glass px-4 py-1.5 text-xs font-mono text-red-300">
               {selectedModule.readTime}
             </span>
           </div>
@@ -138,15 +140,15 @@ export function CyberAwarenessPage() {
           </p>
 
           <div className="space-y-3 pt-2">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold flex items-center gap-1.5">
-              <ShieldAlert className="w-4 h-4" />
-              Key Mandatory Guidelines & Rules of Engagement:
+            <h3 className="text-xs font-mono uppercase tracking-wider text-red-400 font-bold flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-red-400" />
+              Mandatory OPSEC Rules & Standard Operating Protocols:
             </h3>
 
             <div className="space-y-2.5">
               {selectedModule.rules.map((rule, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-start gap-3 text-xs leading-relaxed">
-                  <span className="w-5 h-5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 flex items-center justify-center font-mono text-[10px] font-bold shrink-0 mt-0.5">
+                <div key={idx} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-start gap-3.5 text-xs leading-relaxed">
+                  <span className="w-6 h-6 rounded-xl bg-red-950 text-red-300 border border-red-500/40 flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
                   <span className="text-slate-200">{rule}</span>
@@ -158,23 +160,23 @@ export function CyberAwarenessPage() {
       )}
 
       {/* Interactive Defence Cyber Security Quiz */}
-      <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
           <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Award className="w-5 h-5 text-amber-400" />
+            <h2 className="text-base sm:text-lg font-display font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <Award className="w-4 h-4 text-red-400" />
               Interactive Defence Cyber Readiness Knowledge Check
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              Test your operational readiness against modern cyber and social engineering vectors.
+              Verify your operational readiness against social engineering, honeypot probes, and credential traps.
             </p>
           </div>
           {quizSubmitted && (
             <button
               onClick={resetQuiz}
-              className="text-xs font-mono text-cyan-400 hover:underline"
+              className="text-xs font-mono text-red-400 hover:underline"
             >
-              Retake Quiz
+              [Retake Quiz]
             </button>
           )}
         </div>
@@ -183,33 +185,33 @@ export function CyberAwarenessPage() {
           {QUIZ_QUESTIONS.map((q, qIndex) => {
             const userAnswer = quizAnswers[q.id];
             return (
-              <div key={q.id} className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+              <div key={q.id} className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
                 <p className="text-xs sm:text-sm font-semibold text-white">
                   {qIndex + 1}. {q.question}
                 </p>
 
-                <div className="grid grid-cols-1 gap-2">
+                <div className="grid grid-cols-1 gap-2.5">
                   {q.options.map((opt, optIdx) => {
                     const isSelected = userAnswer === optIdx;
-                    let btnStyle = 'bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700';
+                    let btnStyle = 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700';
 
                     if (quizSubmitted) {
                       if (optIdx === q.correct) {
-                        btnStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold';
+                        btnStyle = 'bg-red-950/80 border-red-400 text-red-300 font-bold shadow-glow-neon';
                       } else if (isSelected && optIdx !== q.correct) {
                         btnStyle = 'bg-red-950/80 border-red-500 text-red-300 line-through';
                       }
                     } else if (isSelected) {
-                      btnStyle = 'bg-cyan-950/80 border-cyan-500 text-cyan-300 font-semibold';
+                      btnStyle = 'bg-red-950/80 border-red-400 text-red-300 font-semibold shadow-glow-neon';
                     }
 
                     return (
                       <button
                         key={optIdx}
                         onClick={() => handleAnswer(q.id, optIdx)}
-                        className={`p-3 rounded-xl text-left text-xs border transition-all ${btnStyle}`}
+                        className={`p-3.5 rounded-2xl text-left text-xs border transition-all ${btnStyle}`}
                       >
-                        <span className="font-mono mr-2">{String.fromCharCode(65 + optIdx)}.</span>
+                        <span className="font-mono mr-2.5 font-bold text-red-400">{String.fromCharCode(65 + optIdx)}.</span>
                         {opt}
                       </button>
                     );
@@ -217,8 +219,8 @@ export function CyberAwarenessPage() {
                 </div>
 
                 {quizSubmitted && (
-                  <div className="p-2.5 rounded bg-slate-950 text-[11px] text-slate-400 border border-slate-800">
-                    <strong className="text-cyan-400">Explanation:</strong> {q.explanation}
+                  <div className="p-3 rounded-xl bg-black/60 text-[11px] text-slate-300 border border-slate-800 leading-relaxed">
+                    <strong className="text-red-400 font-mono">OPSEC Reason:</strong> {q.explanation}
                   </div>
                 )}
               </div>
@@ -231,21 +233,21 @@ export function CyberAwarenessPage() {
             <button
               onClick={handleQuizSubmit}
               disabled={Object.keys(quizAnswers).length < QUIZ_QUESTIONS.length}
-              className="px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs shadow-glow-cyan transition disabled:opacity-50"
+              className="px-8 py-3 rounded-2xl bg-red-500 hover:bg-red-400 text-slate-950 font-display font-bold text-xs uppercase tracking-wider shadow-glow-neon transition disabled:opacity-40"
             >
               Submit Answers & Evaluate Readiness
             </button>
           </div>
         ) : (
-          <div className="p-4 rounded-xl bg-slate-900 border border-cyan-500/40 flex items-center justify-between">
+          <div className="p-5 rounded-2xl bg-slate-950 border border-red-500/40 flex items-center justify-between shadow-glow-neon">
             <div>
-              <p className="text-xs font-mono text-slate-400">Readiness Score Result:</p>
-              <p className="text-xl font-bold text-white font-mono">
+              <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Readiness Score Result:</p>
+              <p className="text-2xl font-display font-bold text-white mt-0.5">
                 {quizScore} / {QUIZ_QUESTIONS.length} ({((quizScore / QUIZ_QUESTIONS.length) * 100).toFixed(0)}%)
               </p>
             </div>
-            <span className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold ${
-              quizScore === QUIZ_QUESTIONS.length ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'
+            <span className={`px-4 py-2 rounded-xl text-xs font-mono font-bold ${
+              quizScore === QUIZ_QUESTIONS.length ? 'bg-red-950 text-red-400 border border-red-500/60' : 'bg-amber-950 text-amber-400 border border-amber-600'
             }`}>
               {quizScore === QUIZ_QUESTIONS.length ? '✓ DEFENCE CYBER CERTIFIED' : 'REVIEW ADVISORIES'}
             </span>
